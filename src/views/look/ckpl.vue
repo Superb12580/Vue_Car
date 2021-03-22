@@ -1,24 +1,32 @@
 <template>
   <div>
-    <div style="margin-left: 1000px">
-    <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
+    <Header></Header>
+    <div style="margin: 50px 0 20px 1200px">
+      <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
     <div>
       <el-timeline>
         <el-timeline-item v-for='record in page.records' :key="index" placement="top">
-          <el-card>
-            <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essayId}}">{{record.essayTitle}}</router-link></h2>
-            <h4 style="color: red" v-if="record.label">#{{record.label.labelText}}#</h4>
-            发表于 {{record.createTime}}
-            <el-badge :value="record.forwardCount" class="item2" type="primary">
-              <el-button size="small" @click="forward(record.essayId)">转发</el-button>
+          <h2><router-link :to="{name: 'ckyh',query: {userId: record.userId}}">{{record.user.userName}}</router-link><i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /> </i></h2>
+          <h3>{{record.commentText}}</h3>
+          <h5>评论于 {{record.createTime}}</h5>
+          <el-card style="padding-left: 50px" v-if="record.essay">
+            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar></router-link>
+            <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
+            <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
+            发表于 {{record.essay.createTime}}
+            <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
+              <el-button size="small" @click="forward(record.essay.essayId)">转发</el-button>
             </el-badge>
-            <el-badge :value="record.agreeCount" class="item">
-              <el-button size="small" @click="agree(record.essayId)">点赞</el-button>
+            <el-badge :value="record.essay.agreeCount" class="item">
+              <el-button size="small" @click="agree(record.essay.essayId)">点赞</el-button>
             </el-badge>
-            <el-badge :value="record.commentCount" class="item" type="warning">
+            <el-badge :value="record.essay.commentCount" class="item" type="warning">
               <el-button size="small">评论</el-button>
             </el-badge>
+          </el-card>
+          <el-card v-else>
+            <h4>原文已删除</h4>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -37,10 +45,12 @@
     </div>
   </div>
 </template>
-<!--我的动态-->
+<!--我的评论-->
 <script>
+import Header from '../../components/header'
 export default {
-  name: 'wddt',
+  name: 'ckpl',
+  components: { Header },
   // 页面刷新
   inject: ['reload'],
   data () {
@@ -55,20 +65,26 @@ export default {
   },
   methods: {
     handleSizeChange (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/user?size=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      this.$http.get('/comment/item?size=' + val + '&userId=' + userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/user?size=' + that.page.size + '&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
+    },
+    // 跳转发表动态
+    to () {
+      this.$router.push('/fbdt')
     },
     // 转发
     forward (essayId) {
@@ -78,7 +94,7 @@ export default {
       }).then(({ value }) => {
         const that = this
         this.$http.post('/forward/add', { userId: that.$store.getters.GET_USER.userId, essayId: essayId, forwardTitle: value }).then(rest => {
-          that.$router.push('/cyq')
+          that.$router.push('/wdzf')
         })
         const msg = value == null ? '' : value
         this.$message({
@@ -108,15 +124,12 @@ export default {
         message: data,
         type: 'success'
       })
-    },
-    // 跳转发表动态
-    to () {
-      this.$router.push('/fbdt')
     }
   },
   created () {
+    const userId = this.$route.query.userId
     const that = this
-    this.$http.get('/essay/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+    this.$http.get('/comment/item?userId=' + userId).then(function (rest) {
       that.page = rest.data.data
     }, function (error) {
       console.log(error)
@@ -134,5 +147,9 @@ export default {
     margin-top: 10px;
     margin-right: 40px;
     margin-left: 500px;
+  }
+  .vip img{
+    margin: 0 3px;
+    width: 40px;
   }
 </style>

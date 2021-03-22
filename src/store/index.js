@@ -6,8 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // token: localStorage.getItem("token"),
-    user: JSON.parse(sessionStorage.getItem('user')),
-    essay: sessionStorage.getItem('essay')
+    user: JSON.parse(sessionStorage.getItem('user'))
   },
   mutations: {
     // set
@@ -19,10 +18,6 @@ export default new Vuex.Store({
     SET_USER: (state, user) => {
       state.user = user
       sessionStorage.setItem('user', JSON.stringify(user))
-    },
-    SET_ESSAY: (state, essay) => {
-      state.essay = essay
-      sessionStorage.setItem('essay', essay)
     },
 
     REMOVE_USER: (state) => {
@@ -37,9 +32,6 @@ export default new Vuex.Store({
     // get
     GET_USER: (state) => {
       return state.user
-    },
-    GET_ESSAY: (state) => {
-      return state.essay
     }
   },
   actions: {},

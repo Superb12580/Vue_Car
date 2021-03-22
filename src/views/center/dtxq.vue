@@ -261,10 +261,7 @@ export default {
     }
   },
   created () {
-    // if (this.$route.params.essayId !== null && this.$route.params.essayId !== this.$store.getters.GET_ESSAY) {
-    //   this.$store.commit('SET_ESSAY', this.$route.params.essayId)
-    // }
-    const essayId = this.$route.params.essayId
+    const essayId = this.$route.query.essayId
     if (essayId) {
       const that = this
       this.$http.get('/essay/item/?essayId=' + essayId).then(rest => {

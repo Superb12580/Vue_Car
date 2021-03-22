@@ -46,6 +46,24 @@ const routes = [
     name: 'dtxq',
     component: () => import('../views/center/dtxq')
   },
+  // 查看用户
+  {
+    path: '/ckyh',
+    name: 'ckyh',
+    component: () => import('../views/look/ckyh')
+  },
+  // 查看动态
+  {
+    path: '/ckdt',
+    name: 'ckdt',
+    component: () => import('../views/look/ckdt')
+  },
+  // 查看评论
+  {
+    path: '/ckpl',
+    name: 'ckpl',
+    component: () => import('../views/look/ckpl')
+  },
   // 个人中心
   {
     path: '/center',

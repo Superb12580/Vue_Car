@@ -44,7 +44,7 @@
         <div>
           <el-timeline>
             <el-timeline-item v-for='record in pageForward.records' :key="index" placement="top">
-              <h2><router-link :to="{name: 'ckyh',query: {userId: record.userId}}">{{record.user.userName}}</router-link><i class="vip"><img src="../assets/icons/vip.png" alt="vip" /> </i></h2>
+              <h2><router-link :to="{name: 'ckyh',query: {userId: record.userId}}">{{record.user.userName}}</router-link><i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /> </i></h2>
               <h2>{{record.forwardTitle}}</h2>
               <h5>转发于 {{record.createTime}}</h5>
               <el-card style="padding-left: 50px" v-if="record.essay">
@@ -84,9 +84,9 @@
 </template>
 <!--我的动态-->
 <script>
-import Header from '../components/header'
+import Header from '../../components/header'
 export default {
-  name: 'cyq',
+  name: 'ckdt',
   components: { Header },
   // 页面刷新
   inject: ['reload'],
@@ -111,32 +111,36 @@ export default {
   },
   methods: {
     handleSizeChange (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/list?size=' + val).then(function (rest) {
+      this.$http.get('/essay/user?userId=' + userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/list?size=' + that.page.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/essay/user?userId=' + userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleSizeChange2 (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/forward/list?size=' + val).then(function (rest) {
+      this.$http.get('/forward/item?userId=' + userId + '&size=' + val).then(function (rest) {
         that.pageForward = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange2 (val) {
+      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/forward/list?size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/forward/item?userId=' + userId + '&size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
         that.pageForward = rest.data.data
       }, function (error) {
         console.log(error)
@@ -190,17 +194,20 @@ export default {
     }
   },
   created () {
-    const that = this
-    this.$http.get('/essay/list').then(function (rest) {
-      that.page = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    this.$http.get('/forward/list').then(function (rest) {
-      that.pageForward = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
+    const userId = this.$route.query.userId
+    if (userId) {
+      const that = this
+      this.$http.get('/essay/user?userId=' + userId).then(function (rest) {
+        that.page = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.$http.get('/forward/item?userId=' + userId).then(function (rest) {
+        that.pageForward = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    }
   }
 }
 </script>

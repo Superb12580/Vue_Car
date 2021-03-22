@@ -3,8 +3,8 @@
     <div class="head">
       <div class="search">
         <i class="el-icon-search"></i>
-        <input type="text" placeholder="请输入你要搜索的内容"/>
-        <button id="btn">搜索</button>
+        <input type="text" v-model="text" placeholder="请输入你要搜索的内容"/>
+        <button id="btn" @click="search(text)">搜索</button>
       </div>
 
       <div class="people">
@@ -39,7 +39,8 @@ export default {
   name: 'Header',
   data () {
     return {
-      flag: false
+      flag: false,
+      text: ''
     }
   },
   methods: {
@@ -66,6 +67,9 @@ export default {
         message: data,
         type: 'success'
       })
+    },
+    search (text) {
+      alert(text)
     }
   },
   created () {

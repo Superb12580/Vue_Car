@@ -9,7 +9,8 @@
           <h3>{{record.forwardTitle}}</h3>
             <h5>转发于 {{record.createTime}}</h5>
           <el-card v-if="record.essay">
-            <h2><router-link :to="{name: 'dtxq',params: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
+            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar></router-link>
+            <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
             <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
             发表于 {{record.essay.createTime}}
             <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
@@ -61,7 +62,7 @@ export default {
   methods: {
     handleSizeChange (val) {
       const that = this
-      this.$http.get('/essay/user?size=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      this.$http.get('/forward/item?size=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -69,7 +70,7 @@ export default {
     },
     handleCurrentChange (val) {
       const that = this
-      this.$http.get('/essay/user?size=' + that.page.size + '&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      this.$http.get('/forward/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -87,7 +88,7 @@ export default {
       }).then(({ value }) => {
         const that = this
         this.$http.post('/forward/add', { userId: that.$store.getters.GET_USER.userId, essayId: essayId, forwardTitle: value }).then(rest => {
-          that.reload()
+          that.$router.push('/cyq')
         })
         const msg = value == null ? '' : value
         this.$message({

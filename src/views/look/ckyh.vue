@@ -1,25 +1,31 @@
 <template>
   <div>
+    <Header></Header>
     <div style="margin-left: 150px">
-      <div style="margin-bottom: 50px;margin-left: 250px"><el-avatar :size="80"> {{user.userName}} </el-avatar></div>
-      <div style="margin-left: 80px">
-        <el-badge :value="user.messageCount" :max="10" class="item" type="primary">
-          <el-button size="small" @click="toMessage">消息</el-button>
-        </el-badge>
+      <div style="margin: 50px 450px">
+        <el-avatar :size="80"> {{user.userName}} </el-avatar>
+        <el-button v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" plain round size="mini">关注</el-button>
+        <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
+      </div>
+      <div style="margin-left: 210px">
       <el-badge :value="user.attentionCount" :max="10" class="item">
-        <el-button size="small" @click="toAttention">关注</el-button>
+        <el-button size="small" @click="toAttention">Ta的关注</el-button>
       </el-badge>
       <el-badge :value="user.collectionCount" :max="10" class="item" type="primary">
-        <el-button size="small" @click="toCollection">收藏</el-button>
+        <el-button size="small" @click="toCollection">Ta的收藏</el-button>
       </el-badge>
       <el-badge :value="user.fansCount" :max="10" class="item" type="warning">
-        <el-button size="small" @click="toFans">粉丝</el-button>
+        <el-button size="small" @click="toFans">Ta的粉丝</el-button>
       </el-badge>
-      <el-button @click="qd" v-if="user.graded===0" type="success" round>点击签到</el-button>
-      <el-button v-if="user.graded===1" type="primary" round disabled>已签到</el-button>
+      <el-badge :value="user.essayCount" :max="10" class="item">
+        <el-button size="small" @click="toEssay(user.userId)">Ta的动态</el-button>
+      </el-badge>
+      <el-badge :value="user.commentCount" :max="10" class="item" type="primary">
+        <el-button size="small" @click="toComment(user.userId)">Ta的评论</el-button>
+      </el-badge>
       </div>
     </div>
-    <div style="margin-top: 50px">
+    <div style="margin-top: 100px;margin-left: 200px">
       <el-row :gutter="20">
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>用户名：</h4></div></el-col>
         <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.userName}}</h4></div></el-col>
@@ -43,10 +49,10 @@
 </template>
 <!--个人资料-->
 <script>
+import Header from '../../components/header'
 export default {
-  name: 'grzl',
-  // 页面刷新
-  inject: ['reload'],
+  components: { Header },
+  name: 'ckyh',
   data () {
     return {
       user: {
@@ -63,18 +69,36 @@ export default {
         collectionCount: 35,
         attentionCount: 35,
         fansCount: 35,
-        messageCount: 35
+        essayCount: 35,
+        forwardCount: 35,
+        commentCount: 35,
+        flagAttention: 0
       }
     }
   },
   methods: {
-    // 签到
-    qd () {
+    toAttention () {
+      this.$router.push('/wdsc')
+    },
+    toCollection () {
+      this.$router.push('/wdgz')
+    },
+    toFans () {
+      this.$router.push('/wdfs')
+    },
+    toEssay (userId) {
+      this.$router.push({ path: '/ckdt', query: { userId: userId } })
+    },
+    toComment (userId) {
+      this.$router.push({ name: 'ckpl', query: { userId: userId } })
+    },
+    // 关注取关
+    attention () {
+      const thatId = this.$route.query.userId
       const that = this
-      this.$http.post('/user/grade', { userId: that.$store.getters.GET_USER.userId }).then(function (rest) {
-        const code = rest.data
-        that.reload()
-        that.msg(code.msg)
+      this.$http.post('/attention/addDelete', { thatId: thatId, thisId: that.$store.getters.GET_USER.userId }).then(function (rest) {
+        that.user.flagAttention = that.user.flagAttention === 0 ? 1 : 0
+        that.msg(rest.data.msg)
       }, function (error) {
         console.log(error)
       })
@@ -86,23 +110,12 @@ export default {
         message: data,
         type: 'success'
       })
-    },
-    toAttention () {
-      this.$router.push('/wdsc')
-    },
-    toCollection () {
-      this.$router.push('/wdgz')
-    },
-    toFans () {
-      this.$router.push('/wdfs')
-    },
-    toMessage () {
-      this.$router.push('/wdxx')
     }
   },
   created () {
+    const thatId = this.$route.query.userId
     const that = this
-    this.$http.get('/user/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+    this.$http.get('/user/item?userId=' + that.$store.getters.GET_USER.userId + '&thatId=' + thatId).then(function (rest) {
       that.user = rest.data.data
     }, function (error) {
       console.log(error)

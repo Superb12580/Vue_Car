@@ -15,7 +15,7 @@
             <span slot="title">个人资料</span>
           </el-menu-item>
           <el-menu-item index="/xgmm">
-            <i class="el-icon-news"></i>
+            <i class="el-icon-edit-outline"></i>
             <span slot="title">修改密码</span>
           </el-menu-item>
           <el-menu-item index="/wddt">
@@ -23,28 +23,28 @@
             <span slot="title">我的动态</span>
           </el-menu-item>
           <el-menu-item index="/wdzf">
-            <i class="el-icon-news"></i>
+            <i class="el-icon-position"></i>
             <span slot="title">我的转发</span>
           </el-menu-item>
           <el-menu-item index="/wdxx">
-            <i class="el-icon-edit-outline"></i>
+            <i class="el-icon-chat-dot-round"></i>
             <span slot="title">我的消息</span>
           </el-menu-item>
           <el-menu-item index="/wdsc">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-star-off"></i>
             <span slot="title">我的收藏</span>
           </el-menu-item>
           <el-menu-item index="/wdpl">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-postcard"></i>
             <span slot="title">我的评论</span>
           </el-menu-item>
           <el-menu-item index="/wdgz">
-            <i class="el-icon-search"></i>
+            <i class="el-icon-view"></i>
             <span slot="title">我的关注</span>
           </el-menu-item>
 
           <el-menu-item index="/wdfs">
-            <i class="el-icon-view"></i>
+            <i class="el-icon-user"></i>
             <span slot="title">我的粉丝</span>
           </el-menu-item>
         </el-menu>

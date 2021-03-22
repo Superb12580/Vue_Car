@@ -80,7 +80,7 @@ export default {
             // 用户id
             that.ruleForm.userId = this.$store.getters.GET_USER.userId
             this.$http.post('/essay/add', this.ruleForm).then(function (rest) {
-              that.$router.push('/wddt')
+              that.$router.push('/cyq')
             }, function (error) {
               console.log(error)
             })
