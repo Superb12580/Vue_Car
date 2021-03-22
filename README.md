@@ -10,8 +10,9 @@
 #### 安装教程
 
 1.  导入项目
-2.  执行 npm install
-3.  执行 npm run serve 启动
+2.  构建Vue环境
+3.  执行 npm install
+4.  执行 npm run serve 启动
 
 #### 使用说明
 
