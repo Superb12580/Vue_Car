@@ -1,9 +1,15 @@
 <template>
   <div>
     <Header></Header>
-    <div style="margin: 50px 0 20px 1200px">
-      <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
+    <div style="margin: 50px">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{name: 'ckyh',query: {userId: userId}}"><span style="color: #409EFF"> {{userName}} </span>的个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item> Ta 的动态</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-button style="margin-left: 1100px" type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
+    <div v-if="page.total !== 0">
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="原创" name="first">
         <div>
@@ -80,6 +86,8 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    </div>
+    <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
   </div>
 </template>
 <!--我的动态-->
@@ -106,41 +114,41 @@ export default {
         total: 20,
         size: 5
       },
-      activeName: 'first'
+      activeName: 'first',
+      // 用户Id
+      userId: '',
+      // 用户名称
+      userName: '张三'
     }
   },
   methods: {
     handleSizeChange (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/user?userId=' + userId + '&size=' + val).then(function (rest) {
+      this.$http.get('/essay/user?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/essay/user?userId=' + userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/essay/user?userId=' + that.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleSizeChange2 (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/forward/item?userId=' + userId + '&size=' + val).then(function (rest) {
+      this.$http.get('/forward/item?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.pageForward = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange2 (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/forward/item?userId=' + userId + '&size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/forward/item?userId=' + that.userId + '&size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
         that.pageForward = rest.data.data
       }, function (error) {
         console.log(error)
@@ -194,25 +202,28 @@ export default {
     }
   },
   created () {
-    const userId = this.$route.query.userId
-    if (userId) {
-      const that = this
-      this.$http.get('/essay/user?userId=' + userId).then(function (rest) {
-        that.page = rest.data.data
-      }, function (error) {
-        console.log(error)
-      })
-      this.$http.get('/forward/item?userId=' + userId).then(function (rest) {
-        that.pageForward = rest.data.data
-      }, function (error) {
-        console.log(error)
-      })
-    }
+    this.userId = this.$route.query.userId
+    this.userName = this.$route.query.userName
+    const that = this
+    this.$http.get('/essay/user?userId=' + that.userId).then(function (rest) {
+      that.page = rest.data.data
+    }, function (error) {
+      console.log(error)
+    })
+    this.$http.get('/forward/item?userId=' + that.userId).then(function (rest) {
+      that.pageForward = rest.data.data
+    }, function (error) {
+      console.log(error)
+    })
   }
 }
 </script>
 
 <style scoped>
+  a {
+    color: #000;
+    text-decoration: none;
+  }
   .item {
     margin-top: 10px;
     margin-right: 40px;

@@ -64,6 +64,24 @@ const routes = [
     name: 'ckpl',
     component: () => import('../views/look/ckpl')
   },
+  // 查看收藏
+  {
+    path: '/cksc',
+    name: 'cksc',
+    component: () => import('../views/look/cksc')
+  },
+  // 查看评论
+  {
+    path: '/ckfs',
+    name: 'ckfs',
+    component: () => import('../views/look/ckfs')
+  },
+  // 查看评论
+  {
+    path: '/ckgz',
+    name: 'ckgz',
+    component: () => import('../views/look/ckgz')
+  },
   // 个人中心
   {
     path: '/center',

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div style="margin-left: 1000px">
-      <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
-    </div>
+    <el-button style="margin-left: 1000px" type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
+    <div v-if="page.total !== 0">
     <div>
       <el-timeline>
         <el-timeline-item v-for='record in page.records' :key="index" placement="top">
@@ -29,7 +28,7 @@
         </el-timeline-item>
       </el-timeline>
     </div>
-    <div>
+    <div style="margin-left: 50px">
       <el-pagination
         background="true"
         @size-change="handleSizeChange"
@@ -41,6 +40,8 @@
         :total="page.total">
       </el-pagination>
     </div>
+    </div>
+    <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
   </div>
 </template>
 <!--我的评论-->
@@ -140,5 +141,9 @@ export default {
     margin-top: 10px;
     margin-right: 40px;
     margin-left: 500px;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
   }
 </style>

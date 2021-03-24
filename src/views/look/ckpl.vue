@@ -1,9 +1,15 @@
 <template>
   <div>
     <Header></Header>
-    <div style="margin: 50px 0 20px 1200px">
-      <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
+    <div style="margin: 50px">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{name: 'ckyh',query: {userId: userId}}"><span style="color: #409EFF"> {{userName}} </span>的个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item> Ta 的评论</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-button style="margin-left: 1100px" type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
+    <div v-if="page.total !== 0">
     <div>
       <el-timeline>
         <el-timeline-item v-for='record in page.records' :key="index" placement="top">
@@ -43,6 +49,8 @@
         :total="page.total">
       </el-pagination>
     </div>
+    </div>
+    <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
   </div>
 </template>
 <!--我的评论-->
@@ -60,23 +68,25 @@ export default {
         current: 1,
         total: 20,
         size: 5
-      }
+      },
+      // 用户Id
+      userId: '',
+      // 用户名称
+      userName: '张三'
     }
   },
   methods: {
     handleSizeChange (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/comment/item?size=' + val + '&userId=' + userId).then(function (rest) {
+      this.$http.get('/comment/item?size=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
       })
     },
     handleCurrentChange (val) {
-      const userId = this.$route.query.userId
       const that = this
-      this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + userId).then(function (rest) {
+      this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -94,7 +104,7 @@ export default {
       }).then(({ value }) => {
         const that = this
         this.$http.post('/forward/add', { userId: that.$store.getters.GET_USER.userId, essayId: essayId, forwardTitle: value }).then(rest => {
-          that.$router.push('/wdzf')
+          that.$router.push('/cyq')
         })
         const msg = value == null ? '' : value
         this.$message({
@@ -127,9 +137,10 @@ export default {
     }
   },
   created () {
-    const userId = this.$route.query.userId
+    this.userId = this.$route.query.userId
+    this.userName = this.$route.query.userName
     const that = this
-    this.$http.get('/comment/item?userId=' + userId).then(function (rest) {
+    this.$http.get('/comment/item?userId=' + this.userId).then(function (rest) {
       that.page = rest.data.data
     }, function (error) {
       console.log(error)
@@ -151,5 +162,9 @@ export default {
   .vip img{
     margin: 0 3px;
     width: 40px;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
   }
 </style>

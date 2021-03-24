@@ -9,19 +9,19 @@
       </div>
       <div style="margin-left: 210px">
       <el-badge :value="user.attentionCount" :max="10" class="item">
-        <el-button size="small" @click="toAttention">Ta的关注</el-button>
+        <el-button size="small" @click="toAttention(user.userId, user.userName)">Ta的关注</el-button>
       </el-badge>
       <el-badge :value="user.collectionCount" :max="10" class="item" type="primary">
-        <el-button size="small" @click="toCollection">Ta的收藏</el-button>
+        <el-button size="small" @click="toCollection(user.userId, user.userName)">Ta的收藏</el-button>
       </el-badge>
       <el-badge :value="user.fansCount" :max="10" class="item" type="warning">
-        <el-button size="small" @click="toFans">Ta的粉丝</el-button>
+        <el-button size="small" @click="toFans(user.userId, user.userName)">Ta的粉丝</el-button>
       </el-badge>
       <el-badge :value="user.essayCount" :max="10" class="item">
-        <el-button size="small" @click="toEssay(user.userId)">Ta的动态</el-button>
+        <el-button size="small" @click="toEssay(user.userId, user.userName)">Ta的动态</el-button>
       </el-badge>
       <el-badge :value="user.commentCount" :max="10" class="item" type="primary">
-        <el-button size="small" @click="toComment(user.userId)">Ta的评论</el-button>
+        <el-button size="small" @click="toComment(user.userId, user.userName)">Ta的评论</el-button>
       </el-badge>
       </div>
     </div>
@@ -77,20 +77,20 @@ export default {
     }
   },
   methods: {
-    toAttention () {
-      this.$router.push('/wdsc')
+    toAttention (userId, userName) {
+      this.$router.push({ path: '/ckgz', query: { userId: userId, userName: userName } })
     },
-    toCollection () {
-      this.$router.push('/wdgz')
+    toCollection (userId, userName) {
+      this.$router.push({ path: '/cksc', query: { userId: userId, userName: userName } })
     },
-    toFans () {
-      this.$router.push('/wdfs')
+    toFans (userId, userName) {
+      this.$router.push({ path: '/ckfs', query: { userId: userId, userName: userName } })
     },
-    toEssay (userId) {
-      this.$router.push({ path: '/ckdt', query: { userId: userId } })
+    toEssay (userId, userName) {
+      this.$router.push({ path: '/ckdt', query: { userId: userId, userName: userName } })
     },
-    toComment (userId) {
-      this.$router.push({ name: 'ckpl', query: { userId: userId } })
+    toComment (userId, userName) {
+      this.$router.push({ name: 'ckpl', query: { userId: userId, userName: userName } })
     },
     // 关注取关
     attention () {
@@ -114,8 +114,13 @@ export default {
   },
   created () {
     const thatId = this.$route.query.userId
+    const userId = this.$store.getters.GET_USER.userId
+    // 如果是本人
+    if (thatId === userId) {
+      this.$router.push('/grzl')
+    }
     const that = this
-    this.$http.get('/user/item?userId=' + that.$store.getters.GET_USER.userId + '&thatId=' + thatId).then(function (rest) {
+    this.$http.get('/user/item?userId=' + userId + '&thatId=' + thatId).then(function (rest) {
       that.user = rest.data.data
     }, function (error) {
       console.log(error)

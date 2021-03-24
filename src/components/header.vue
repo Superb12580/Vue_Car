@@ -25,9 +25,9 @@
     <div class="center">
       <router-link :to="{name: 'home'}"><img src="../assets/logo.png" alt="汽车之家" class="logo"/></router-link>
       <div class="title">
-        <router-link to="/">首页</router-link>
-        <router-link to="/xc">选车</router-link>
-        <router-link to="/ph">排行</router-link>
+        <router-link to="/">首 页</router-link>
+        <router-link to="/xc">选 车</router-link>
+        <router-link to="/ph">排 行</router-link>
         <router-link to="/cyq">车友圈</router-link>
       </div>
     </div>
@@ -87,11 +87,6 @@ export default {
     width: 200px;
   }
 
-  .main-col {
-    display: inline-block;
-    width: calc(100% - 200px);
-  }
-
   .home {
     background-color: #eee;
     padding-top: 10px;
@@ -107,14 +102,14 @@ export default {
   }
 
   .home a.router-link-exact-active {
-    color: red;
+    color: #ff6700;
   }
 
   .home .search {
     display: block;
     width: 500px;
     margin-left: 550px;
-    border: 1px solid yellow;
+    border: 1px solid #ff6700;;
     border-radius: 3px;
     position: relative;
   }
@@ -141,9 +136,8 @@ export default {
     width: 98px;
     height: 42px;
     line-height: 40px;
+    background-color: #ff6700;
     color: #000;
-    background-color: yellow;
-
     border: 0;
     outline: 0;
     cursor: pointer;
@@ -231,6 +225,6 @@ export default {
   }
 
   .head .people .others a:hover {
-    background-color: yellow;
+    background-color: #ff6700;
   }
 </style>

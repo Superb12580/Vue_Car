@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header></Header>
+    <div v-if="page.total !== 0">
     <div style="margin: 50px 0 20px 1200px">
       <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
@@ -80,6 +81,8 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    </div>
+    <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
   </div>
 </template>
 <!--我的动态-->
@@ -218,5 +221,10 @@ export default {
   .vip img{
     margin: 0 3px;
     width: 40px;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
   }
 </style>

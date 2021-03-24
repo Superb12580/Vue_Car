@@ -88,10 +88,10 @@ export default {
       })
     },
     toAttention () {
-      this.$router.push('/wdsc')
+      this.$router.push('/wdgz')
     },
     toCollection () {
-      this.$router.push('/wdgz')
+      this.$router.push('/wdsc')
     },
     toFans () {
       this.$router.push('/wdfs')
