@@ -34,6 +34,12 @@ const routes = [
     name: 'header',
     component: () => import('../components/header')
   },
+  // 文章详情
+  {
+    path: '/wzxq',
+    name: 'wzxq',
+    component: () => import('../views/wzxq')
+  },
   // 发表动态
   {
     path: '/fbdt',
