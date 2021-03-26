@@ -100,7 +100,7 @@
 <!--      折叠图开始-->
       <div style="float: left">
         <router-link :to="{name: '',query: {styleId: imgZb.style_id}}">
-        <el-image :src="imgZb.style_photo" style="width: 350px;height: 250px">
+        <el-image :src="imgZb.style_photo" style="width: 400px;height: 250px">
           <div slot="placeholder" class="image-slot">
             加载中<span class="dot">...</span>
           </div>
@@ -109,7 +109,7 @@
       </div>
 <!--      折叠图结束-->
 <!--      折叠文开始-->
-      <div style="width: 450px;margin-left: 400px">
+      <div style="width: 450px;margin-left: 450px">
         <el-collapse v-model="imgZb.activeName" accordion>
           <el-collapse-item>
             <template slot="title">
@@ -150,26 +150,31 @@
       <!--      文章排行榜开始-->
       <div class="box3" style="height: 400px;width: 400px;float: right">
         <ul>
-          <router-link class="xr" style="float: right;font-size: 16px" :to="{name: ''}">更多 ></router-link>
+          <router-link class="xr" style="float: right;font-size: 16px" :to="{name: 'wzlb'}">更多 ></router-link>
           <h2 style="margin-bottom: 20px">文章排行榜</h2>
           <li class="list" v-for="(item,index) in wzPh">
           <span class="left">
             <span v-if="index === 0" class="num num1">{{index + 1}}</span>
             <span v-else-if="index === 1" class="num num2">{{index + 1}}</span>
+            <span v-else-if="index === 2" class="num num3">{{index + 1}}</span>
             <span v-else class="num">{{index + 1}}</span>
-            <router-link style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span class="content">{{item.title}}</span></router-link>
+            <router-link v-if="index === 0" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #e62021" class="content">{{item.title}}</span></router-link>
+            <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.title}}</span></router-link>
+            <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.title}}</span></router-link>
+            <router-link v-else style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span class="content">{{item.title}}</span></router-link>
           </span>
-            <span class="bofang"> {{item.count}}次播放 </span>
+            <span class="bofang"> {{item.count}}次点击 </span>
           </li>
         </ul>
       </div>
       <!--      文章排行榜结束-->
 <!--      文章推荐开始-->
       <div class="box4" style="height: 400px;width: 450px;float: right">
-        <router-link style="float: right;font-size: 16px" :to="{name: ''}">更多 ></router-link>
+        <router-link style="float: right;font-size: 16px" :to="{name: 'wzlb'}">更多 ></router-link>
         <ul style="padding-top: 10px">
-          <li v-for="item in wzTj">
-            <router-link style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
+          <li v-for="(item,index) in wzTj">
+            <router-link v-if="index === 6 || index === 7" style="font-size: 16px;color: #ff6700" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
+            <router-link v-else style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
           </li>
         </ul>
       </div>
@@ -186,12 +191,13 @@
     </div>
 <!--    文章结束-->
 <!--    底部style图开始-->
-    <div style="margin-top: 20px">
+    <div style="width: 1300px"><el-button @click="refresh" style="margin-left: 1250px;margin-top: 10px" icon="el-icon-refresh" circle></el-button></div>
+    <div >
       <el-row>
         <el-col :span="6" v-for="(item, index) in imgDb" :key="index" :offset="2">
           <router-link :to="{name: '',query: {styleId: item.styleId}}">
           <el-card :body-style="{ padding: '10px' }" shadow="hover" style="margin: 10px">
-            <img style="height: 230px" v-bind:src="item.stylePhoto" class="image">
+            <img style="height: 230px" :src="item.stylePhoto" class="image">
             <div style="padding: 14px;">
               <span>{{item.styleName}}</span>
               <div class="bottom clearfix">
@@ -322,6 +328,20 @@ export default {
       ]
     }
   },
+  methods: {
+    refresh () {
+      const that = this
+      this.$http.get('/style/item').then(function (rest) {
+        that.imgDb = rest.data.data
+        // 动态照片
+        for (const i in rest.data.data) {
+          that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
+        }
+      }, function (error) {
+        console.log(error)
+      })
+    }
+  },
   created () {
     const that = this
     // 轮播图初始化
@@ -447,7 +467,7 @@ li {
   background-color: #e65800;
   color: #ffffff;
 }
-.box3 .left .num2 {
+.box3 .left .num3 {
   background-color: #f5b330;
   color: #ffffff;
 }

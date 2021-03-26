@@ -44,10 +44,7 @@ export default {
   data () {
     return {
       page: {
-        records: [{
-          // 是否互相关注
-          flagFans: 1
-        }],
+        records: [],
         current: 1,
         total: 20,
         size: 5

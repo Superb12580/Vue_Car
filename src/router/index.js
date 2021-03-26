@@ -38,7 +38,19 @@ const routes = [
   {
     path: '/wzxq',
     name: 'wzxq',
-    component: () => import('../views/wzxq')
+    component: () => import('../views/news/wzxq')
+  },
+  // 文章详情
+  {
+    path: '/wzxq2',
+    name: 'wzxq2',
+    component: () => import('../views/news/wzxq2')
+  },
+  // 文章列表
+  {
+    path: '/wzlb',
+    name: 'wzlb',
+    component: () => import('../views/news/wzlb')
   },
   // 发表动态
   {
@@ -76,13 +88,13 @@ const routes = [
     name: 'cksc',
     component: () => import('../views/look/cksc')
   },
-  // 查看评论
+  // 查看粉丝
   {
     path: '/ckfs',
     name: 'ckfs',
     component: () => import('../views/look/ckfs')
   },
-  // 查看评论
+  // 查看关注
   {
     path: '/ckgz',
     name: 'ckgz',
@@ -159,12 +171,6 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('../views/login/register')
-  },
-  // 注册
-  {
-    path: '/register2',
-    name: 'register2',
-    component: () => import('../views/login/register2')
   },
   // 修改资料
   {

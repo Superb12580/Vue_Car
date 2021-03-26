@@ -94,16 +94,30 @@ export default {
     },
     // 跳转发表动态
     to () {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (user === null) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       this.$router.push('/fbdt')
     },
     // 转发
     forward (essayId) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (user === null) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       this.$prompt('说点什么吧...', '转发', {
         confirmButtonText: '转发',
         cancelButtonText: '取消'
       }).then(({ value }) => {
         const that = this
-        this.$http.post('/forward/add', { userId: that.$store.getters.GET_USER.userId, essayId: essayId, forwardTitle: value }).then(rest => {
+        this.$http.post('/forward/add', { userId: user.userId, essayId: essayId, forwardTitle: value }).then(rest => {
           that.$router.push('/cyq')
         })
         const msg = value == null ? '' : value
@@ -120,8 +134,15 @@ export default {
     },
     // 点赞
     agree (essayId) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (user === null) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       const that = this
-      this.$http.post('/agree/addDelete', { userId: that.$store.getters.GET_USER.userId, essayId: essayId }).then(rest => {
+      this.$http.post('/agree/addDelete', { userId: user.userId, essayId: essayId }).then(rest => {
         that.reload()
         const msg = rest.data.msg
         that.msg(msg)

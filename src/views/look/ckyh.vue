@@ -95,8 +95,15 @@ export default {
     // 关注取关
     attention () {
       const thatId = this.$route.query.userId
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (user === null) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       const that = this
-      this.$http.post('/attention/addDelete', { thatId: thatId, thisId: that.$store.getters.GET_USER.userId }).then(function (rest) {
+      this.$http.post('/attention/addDelete', { thatId: thatId, thisId: user.userId }).then(function (rest) {
         that.user.flagAttention = that.user.flagAttention === 0 ? 1 : 0
         that.msg(rest.data.msg)
       }, function (error) {
@@ -114,10 +121,12 @@ export default {
   },
   created () {
     const thatId = this.$route.query.userId
-    const userId = this.$store.getters.GET_USER.userId
+    const user = this.$store.getters.GET_USER
+    const userId = user === null ? 0 : user.userId
     // 如果是本人
     if (thatId === userId) {
       this.$router.push('/grzl')
+      return false
     }
     const that = this
     this.$http.get('/user/item?userId=' + userId + '&thatId=' + thatId).then(function (rest) {
