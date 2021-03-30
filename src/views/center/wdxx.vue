@@ -68,6 +68,11 @@
               prop="messageTitle">
             </el-table-column>
             <el-table-column
+              width="110px"
+              label="相关人"
+              prop="user.userName">
+            </el-table-column>
+            <el-table-column
               width="210px"
               label="消息详情"
               prop="messageText">
@@ -116,6 +121,72 @@
             </el-pagination>
           </div>
         </el-tab-pane>
+<!--        -->
+        <el-tab-pane label="评论消息" name="xr">
+          <el-table height="450px"
+                    stripe
+                    :data="page4.records.filter(data => !search || data.messageTitle.toLowerCase().includes(search.toLowerCase()))"
+                    style="width: 100%">
+            <el-table-column
+              width="120px"
+              label="消息标题"
+              prop="messageTitle">
+            </el-table-column>
+            <el-table-column
+              width="110px"
+              label="点赞用户"
+              prop="user.userName">
+            </el-table-column>
+            <el-table-column
+              width="210px"
+              label="消息详情"
+              prop="messageText">
+            </el-table-column>
+            <el-table-column
+              width="120px"
+              label="发送人"
+              prop="userName">
+            </el-table-column>
+            <el-table-column
+              width="160px"
+              label="通知时间"
+              prop="createTime">
+            </el-table-column>
+            <el-table-column
+              label="相关评论"
+              prop="commentText">
+            </el-table-column>
+            <el-table-column
+              width="150px"
+              align="right">
+              <template slot="header" slot-scope="scope">
+                <el-input
+                  v-model="search"
+                  size="mini"
+                  placeholder="输入关键字搜索"/>
+              </template>
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div>
+            <el-pagination
+              background="true"
+              @size-change="handleSizeChange4"
+              @current-change="handleCurrentChange4"
+              :current-page="page4.current"
+              :page-sizes="[5, 8, 10, 15]"
+              :page-size="page4.size"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page4.total">
+            </el-pagination>
+          </div>
+        </el-tab-pane>
+<!--        -->
         <el-tab-pane label="私信" name="third">
           <el-table height="450px"
                     stripe
@@ -204,6 +275,12 @@ export default {
         total: 20,
         size: 5
       },
+      page4: {
+        records: [],
+        current: 1,
+        total: 20,
+        size: 5
+      },
       search: ''
     }
   },
@@ -256,6 +333,22 @@ export default {
         console.log(error)
       })
     },
+    handleSizeChange4 (val) {
+      const that = this
+      this.$http.get('/message/item?size=' + val + '&messageType=3&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+        that.page4 = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    handleCurrentChange4 (val) {
+      const that = this
+      this.$http.get('/message/item?size=' + that.page4.size + '&messageType=3&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+        that.page4 = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
     handleDelete (index, row) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -298,6 +391,11 @@ export default {
     })
     this.$http.get('/message/item?messageType=2&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.page3 = rest.data.data
+    }, function (error) {
+      console.log(error)
+    })
+    this.$http.get('/message/item?messageType=3&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      that.page4 = rest.data.data
     }, function (error) {
       console.log(error)
     })

@@ -14,9 +14,12 @@
       <el-tab-pane label="原创" name="first">
         <div>
         <el-timeline>
-          <el-timeline-item v-for='record in page.records' :key="index" placement="top">
+          <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
             <el-card style="padding-left: 50px">
-              <router-link :to="{name: 'ckyh',query: {userId: record.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar></router-link>
+              <router-link :to="{name: 'ckyh',query: {userId: record.userId}}">
+                <img style="width: 60px;height: 60px" v-if="record.user.photo" :src="record.user.photo">
+                <el-avatar v-else :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar>
+              </router-link>
               <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essayId}}">{{record.essayTitle}}</router-link></h2>
               <h4 style="color: red" v-if="record.label">#{{record.label.labelText}}#</h4>
               发表于 {{record.createTime}}
@@ -49,12 +52,15 @@
       <el-tab-pane label="转发" name="second">
         <div>
           <el-timeline>
-            <el-timeline-item v-for='record in pageForward.records' :key="index" placement="top">
+            <el-timeline-item v-for='(record,index) in pageForward.records' :key="index" placement="top">
               <h2><router-link :to="{name: 'ckyh',query: {userId: record.userId}}">{{record.user.userName}}</router-link><i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /> </i></h2>
               <h2>{{record.forwardTitle}}</h2>
               <h5>转发于 {{record.createTime}}</h5>
               <el-card style="padding-left: 50px" v-if="record.essay">
-                <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar></router-link>
+                <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}">
+                  <img style="width: 60px;height: 60px" v-if="record.essay.user.photo" :src="record.essay.user.photo">
+                  <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
+                </router-link>
                 <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
                 <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
                 发表于 {{record.essay.createTime}}
@@ -158,7 +164,7 @@ export default {
     forward (essayId) {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -187,7 +193,7 @@ export default {
     agree (essayId) {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -211,7 +217,7 @@ export default {
     to () {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -228,11 +234,19 @@ export default {
     const that = this
     this.$http.get('/essay/user?userId=' + that.userId).then(function (rest) {
       that.page = rest.data.data
+      // 处理照片
+      for (const i in rest.data.data.records) {
+        that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+      }
     }, function (error) {
       console.log(error)
     })
     this.$http.get('/forward/item?userId=' + that.userId).then(function (rest) {
       that.pageForward = rest.data.data
+      // 处理照片
+      for (const i in rest.data.data.records) {
+        that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+      }
     }, function (error) {
       console.log(error)
     })

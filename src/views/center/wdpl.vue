@@ -4,11 +4,15 @@
     <div v-if="page.total !== 0">
     <div>
       <el-timeline>
-        <el-timeline-item v-for='record in page.records' :key="index" placement="top">
+        <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
+          <el-button style="float: right;margin-top: 20px" icon="el-icon-delete" type="text" @click="scpl(record.id, record.userId, record.essay.essayId)">删除</el-button>
           <h3>{{record.commentText}}</h3>
           <h5>评论于 {{record.createTime}}</h5>
           <el-card v-if="record.essay">
-            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar></router-link>
+            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}">
+              <img style="width: 60px;height: 60px" v-if="record.user.photo" :src="record.user.photo">
+              <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
+            </router-link>
             <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
             <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
             发表于 {{record.essay.createTime}}
@@ -65,6 +69,10 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -73,6 +81,10 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -103,6 +115,27 @@ export default {
         })
       })
     },
+    // 删除评论
+    scpl (id, userId, essayId) {
+      const that = this
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.post('/comment/delete', { id: id, userId: userId, essayId: essayId }).then(function (rest) {
+          that.msg(rest.data.msg)
+          that.reload()
+        }, function (error) {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
     // 点赞
     agree (essayId) {
       const that = this
@@ -125,6 +158,10 @@ export default {
     const that = this
     this.$http.get('/comment/item?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.page = rest.data.data
+      // 处理照片
+      for (const i in rest.data.data.records) {
+        that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+      }
     }, function (error) {
       console.log(error)
     })
@@ -145,5 +182,8 @@ export default {
   a {
     color: #000;
     text-decoration: none;
+  }
+  a:hover {
+    color: #ff6700;
   }
 </style>

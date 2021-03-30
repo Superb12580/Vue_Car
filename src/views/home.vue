@@ -146,7 +146,7 @@
 <!--      折叠结束-->
     </div>
 <!--    文章开始-->
-    <div style="height: 400px">
+    <div style="height: 400px;margin-bottom: 30px">
       <!--      文章排行榜开始-->
       <div class="box3" style="height: 400px;width: 400px;float: right">
         <ul>
@@ -191,8 +191,8 @@
     </div>
 <!--    文章结束-->
 <!--    底部style图开始-->
-    <div style="width: 1300px"><el-button @click="refresh" style="margin-left: 1250px;margin-top: 10px" icon="el-icon-refresh" circle></el-button></div>
-    <div >
+    <a style="color: #999;margin-left: 1230px;" href="javascript:;" @click="refresh"><i></i><span>换一换</span></a>
+    <div>
       <el-row>
         <el-col :span="6" v-for="(item, index) in imgDb" :key="index" :offset="2">
           <router-link :to="{name: '',query: {styleId: item.styleId}}">
@@ -680,5 +680,8 @@ li {
   a {
     color: #000;
     text-decoration: none;
+  }
+  a span:hover {
+    color: #ff6700;
   }
 </style>

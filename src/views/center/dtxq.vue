@@ -22,11 +22,13 @@
         </div>
         <div class="call">
           <div class="left">
-            <img src="../../assets/icons/people.jpg" alt="logo" />
+            <img style="width: 60px;height: 60px" v-if="user.userId === 0" src="../../assets/搬砖.jpg" alt="logo" />
+            <img style="width: 60px;height: 60px" v-else-if="user.photo" :src="user.photo">
+            <el-avatar v-else :size="60"> {{user.userName}} </el-avatar>
           </div>
           <div class="right">
             <form>
-              <textarea placeholder="评论"></textarea>
+              <textarea placeholder="评论" v-model="text"></textarea>
             </form>
             <div class="icon-left"></div>
             <div class="bottom">
@@ -35,47 +37,60 @@
                 <i class="icon-at"></i>
               </div>
               <div class="send">
-                <span>140</span>
-                <a href="javascript:;">发表</a>
+                <span>140 </span>
+                <a href="javascript:;" @click="fbpl()">发表</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="comments">
+        <div class="comments" v-if="page.total !== 0">
           <div class="top">最新评论</div>
           <div class="items">
             <ul>
-              <li v-for="(b,i) in list" :key="i">
+              <li v-for="(item,i) in page.records" :key="i">
                 <div class="left">
-                  <img src="../../assets/people.png" alt="用户头像" />
+                  <router-link :to="{name: 'ckyh',query: {userId: item.user.userId}}">
+                    <img v-if="item.user.photo" :src="item.user.photo">
+                    <el-avatar v-else :size="54"> {{item.user.userName}} </el-avatar>
+                  </router-link>
                 </div>
                 <div class="right">
                   <div class="up">
-                    <a href="#">{{b.name}}</a>
-                    <i class="icon-wangyi"
-                    >
-                    </i>
+                    <router-link :to="{name: 'ckyh',query: {userId: item.user.userId}}"><a href="#">{{item.user.userName}}</a></router-link>
+                    <i class="icon-wangyi"></i>
                     <i class="icon-vip"><img src="../../assets/icons/vip.png" alt="vip" /> </i>
-
-                    &nbsp;:&nbsp;<span class="letter"
-                  >{{b.content}}</span
-                  >
+                    &nbsp;:&nbsp;<span class="letter">{{item.commentText}}</span>
                   </div>
-
                   <div class="down">
-                    <div class="time">{{b.time}}</div>
+                    <div class="time">{{item.createTime}}</div>
+                    <el-button @click="scpl(item.id)" style="margin-right: 450px" type="text" icon="el-icon-delete" v-show="item.user.userId === user.userId">删除</el-button>
                     <div class="zan">
-                      <i class="icon-zan"></i>
-                      <span class="nums">(<span class="num">{{b.zan}}</span>)</span
-                      ><span>&nbsp;|&nbsp;</span> <a href="#">回复</a>
+                      <a href="javascript:;" @click="agreePl(item.id)"><i class="icon-zan"></i></a>
+                      <span class="nums">(<span class="num">{{item.count}}</span>)</span>
+                      <span>&nbsp;|&nbsp;</span> <a href="javascript:;"><span>回复</span></a>
                     </div>
+
                   </div>
+
                 </div>
 
               </li>
             </ul>
           </div>
+          <div style="margin-top: 20px">
+            <el-pagination
+              background="true"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="[5, 8, 10, 15]"
+              :page-size="page.size"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total">
+            </el-pagination>
+          </div>
         </div>
+        <div style="margin-left: 80px" v-else><h4 style="color: #475669">快来坐沙发吧...</h4></div>
       </div>
     </div>
     </div>
@@ -94,110 +109,91 @@ export default {
       essay: {},
       // 判断是不是本人操作
       flag: false,
-      all: 10, // 总页数
-      cur: 1, // 当前页码
-      totalPage: 0, // 当前条数
-      list: [
-        {
-          id: 1,
-          src: require('../../assets/people.png'),
-          name: '傻同桌',
-          content: '新年快乐，祝弟兄们早日早日提车!',
-          time: '2021-01-01',
-          zan: '666'
-        },
-        {
-          id: 2,
-          src: require('../../assets/people.png'),
-          name: '阿辉',
-          content: '别瞒了，这杯我先干了！',
-          time: '2021-01-01',
-          zan: '6666'
-        },
-        {
-          id: 3,
-          src: require('../../assets/people.png'),
-          name: '陈东',
-          content: '咦中！中中中！！!',
-          time: '2021-01-01',
-          zan: '234'
-        },
-        {
-          id: 4,
-          src: require('../../assets/people.png'),
-          name: '大柱',
-          content: '都先别说类，你看这车真不赖！',
-          time: '2021-01-01',
-          zan: '425'
-        },
-        {
-          id: 5,
-          src: require('../../assets/people.png'),
-          name: '杜部长',
-          content: '我不中了，摸着天花板了。',
-          time: '2021-01-01',
-          zan: '123'
-        },
-        {
-          id: 6,
-          src: require('../../assets/people.png'),
-          name: '高磊',
-          content: '我出去一趟，回来接着整！',
-          time: '2021-01-01',
-          zan: '384'
-        },
-        {
-          id: 7,
-          src: require('../../assets/people.png'),
-          name: '老表',
-          content: '别欺负我不能喝啊。',
-          time: '2021-01-01',
-          zan: '222'
-        },
-        {
-          id: 8,
-          src: require('../../assets/people.png'),
-          name: '盼盼',
-          content: '这杯我替他喝了！',
-          time: '2021-01-01',
-          zan: '6868'
-        },
-        {
-          id: 9,
-          src: require('../../assets/people.png'),
-          name: '梁兵',
-          content: '来吧！雪碧管饱！',
-          time: '2021-01-01',
-          zan: '789'
-        },
-        {
-          id: 8,
-          src: require('../../assets/people.png'),
-          name: '杨涛',
-          content: '别着急，我先垫垫。一会洗jio去~',
-          time: '2021-01-01',
-          zan: '9876'
-        },
-        {
-          id: 9,
-          src: require('../../assets/people.png'),
-          name: '袁总',
-          content: '咋回事唉，我都提完了，你们还没动嘞！',
-          time: '2021-01-01',
-          zan: '6669'
-        },
-        {
-          id: 10,
-          src: require('../../assets/people.png'),
-          name: 'people',
-          content: '新年快乐！年年有余！',
-          time: '2021-01-01',
-          zan: '1234'
-        }
-      ]
+      // 是否是本人评论 登录人信息
+      user: {
+        userId: 0,
+        userName: '杜兰特',
+        photo: ''
+      },
+      // 评论
+      page: {
+        records: [],
+        current: 1,
+        total: 20,
+        size: 10
+      },
+      // 评论正文
+      text: ''
     }
   },
   methods: {
+    handleSizeChange (val) {
+      const that = this
+      this.$http.get('/comment/itemByEssayId/?essayId=' + that.essay.essayId + '&size=' + val).then(function (rest) {
+        that.page = rest.data.data
+        // 照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    handleCurrentChange (val) {
+      const that = this
+      this.$http.get('/comment/itemByEssayId/?essayId=' + that.essay.essayId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
+        that.page = rest.data.data
+        // 照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    // 删除评论
+    scpl (id) {
+      const user = this.$store.getters.GET_USER
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const that = this
+        this.$http.post('/comment/delete', { userId: user.userId, essayId: that.essay.essayId, id: id }).then(rest => {
+          that.reload()
+        })
+        this.$message({
+          type: 'success',
+          message: '评论已删除!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 发表评论
+    fbpl () {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      if (!this.text) {
+        this.msg('说点什么吧...')
+        return false
+      }
+      const that = this
+      this.$http.post('/comment/add', { userId: user.userId, essayId: this.essay.essayId, commentText: this.text }).then(rest => {
+        that.reload()
+        const msg = rest.data.msg
+        that.msg(msg)
+      })
+    },
     // 删除动态
     remove () {
       this.$confirm('此操作将永久删除, 是否继续?', '提示', {
@@ -222,12 +218,19 @@ export default {
     },
     // 转发
     forward () {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       this.$prompt('说点什么吧...', '转发', {
         confirmButtonText: '转发',
         cancelButtonText: '取消'
       }).then(({ value }) => {
         const that = this
-        this.$http.post('/forward/add', { userId: that.$store.getters.GET_USER.userId, essayId: that.essay.essayId, forwardTitle: value }).then(rest => {
+        this.$http.post('/forward/add', { userId: user.userId, essayId: that.essay.essayId, forwardTitle: value }).then(rest => {
           that.$router.push('/wdzf')
         })
         const msg = value == null ? '' : value
@@ -244,8 +247,31 @@ export default {
     },
     // 点赞
     agree () {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
       const that = this
-      this.$http.post('/agree/addDelete', { userId: that.$store.getters.GET_USER.userId, essayId: that.essay.essayId }).then(rest => {
+      this.$http.post('/agree/addDelete', { userId: user.userId, essayId: that.essay.essayId }).then(rest => {
+        that.reload()
+        const msg = rest.data.msg
+        that.msg(msg)
+      })
+    },
+    // 评论点赞
+    agreePl (id) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      const that = this
+      this.$http.post('/agree-pl/addDelete', { userId: user.userId, commentId: id }).then(rest => {
         that.reload()
         const msg = rest.data.msg
         that.msg(msg)
@@ -262,24 +288,43 @@ export default {
   },
   created () {
     const essayId = this.$route.query.essayId
-    if (essayId) {
-      const that = this
-      this.$http.get('/essay/item/?essayId=' + essayId).then(rest => {
-        that.essay = rest.data.data
-
-        // 转成Markdown显示
-        const MarkdownIt = require('markdown-it')
-        const md = new MarkdownIt()
-        that.essay.essayText = md.render(that.essay.essayText)
-
-        // 按钮显示 只有当是本人登录时才显示
-        that.flag = (rest.data.data.user.userId === that.$store.getters.GET_USER.userId)
-      })
-    }
+    const that = this
+    // 动态详情
+    this.$http.get('/essay/item/?essayId=' + essayId).then(rest => {
+      that.essay = rest.data.data
+      // 转成Markdown显示
+      const MarkdownIt = require('markdown-it')
+      const md = new MarkdownIt()
+      that.essay.essayText = md.render(that.essay.essayText)
+      // 按钮显示 只有当是本人登录时才显示
+      const user = this.$store.getters.GET_USER
+      if (user) {
+        // 登录人信息赋值
+        that.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
+          that.user = rest.data.data
+          that.user.photo = require('../../assets/' + rest.data.data.photo)
+        }, function (error) {
+          console.log(error)
+        })
+        that.flag = (rest.data.data.user.userId === user.userId)
+      }
+    })
+    // 评论初始化
+    this.$http.get('/comment/itemByEssayId/?essayId=' + essayId).then(rest => {
+      that.page = rest.data.data
+      // 照片
+      for (const i in rest.data.data.records) {
+        that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+      }
+    })
   }
 }
 </script>
 <style scoped>
+
+  span:hover {
+    color: #ff6700;
+  }
   .detail {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     width: 100%;

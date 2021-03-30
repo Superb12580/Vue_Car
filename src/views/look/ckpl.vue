@@ -17,7 +17,10 @@
           <h3>{{record.commentText}}</h3>
           <h5>评论于 {{record.createTime}}</h5>
           <el-card style="padding-left: 50px" v-if="record.essay">
-            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}"><el-avatar :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar></router-link>
+            <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}">
+              <img style="width: 60px;height: 60px" v-if="record.essay.user.photo" :src="record.essay.user.photo">
+              <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
+            </router-link>
             <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
             <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
             发表于 {{record.essay.createTime}}
@@ -80,6 +83,10 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -88,6 +95,10 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -96,7 +107,7 @@ export default {
     to () {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -107,7 +118,7 @@ export default {
     forward (essayId) {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -136,7 +147,7 @@ export default {
     agree (essayId) {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
-      if (user === null) {
+      if (!user) {
         this.msg('您还没登录...')
         this.$router.push('/login')
         return false
@@ -163,6 +174,10 @@ export default {
     const that = this
     this.$http.get('/comment/item?userId=' + this.userId).then(function (rest) {
       that.page = rest.data.data
+      // 处理照片
+      for (const i in rest.data.data.records) {
+        that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+      }
     }, function (error) {
       console.log(error)
     })

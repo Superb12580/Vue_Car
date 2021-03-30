@@ -13,7 +13,10 @@
         <el-col style="margin-bottom: 50px" :span="2" v-for="(record, index) in page.records" :key="record" :offset="2">
           <el-card :body-style="{ padding: '0px' }" shadow="hover">
             <router-link :to="{name: 'ckyh',query: {userId: record.user.userId}}">
-              <div style="margin-left: 22px"><el-avatar :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar></div>
+              <div style="margin-left: 22px">
+                <img style="width: 60px;height: 60px" v-if="record.user.photo" :src="record.user.photo">
+                <el-avatar v-else :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar>
+              </div>
               <h3 style="text-align: center">{{record.user.userName}}</h3>
             </router-link>
           </el-card>
@@ -60,6 +63,10 @@ export default {
       const that = this
       this.$http.get('/attention/itemFans?thatId=' + that.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -68,6 +75,10 @@ export default {
       const that = this
       this.$http.get('/attention/itemFans?thatId=' + that.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
       }, function (error) {
         console.log(error)
       })
@@ -79,6 +90,10 @@ export default {
     const that = this
     this.$http.get('/attention/itemFans?thatId=' + that.userId).then(function (rest) {
       that.page = rest.data.data
+      // 处理照片
+      for (const i in rest.data.data.records) {
+        that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+      }
     }, function (error) {
       console.log(error)
     })

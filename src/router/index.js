@@ -40,12 +40,6 @@ const routes = [
     name: 'wzxq',
     component: () => import('../views/news/wzxq')
   },
-  // 文章详情
-  {
-    path: '/wzxq2',
-    name: 'wzxq2',
-    component: () => import('../views/news/wzxq2')
-  },
   // 文章列表
   {
     path: '/wzlb',
@@ -131,11 +125,6 @@ const routes = [
         component: () => import('../views/center/wdfs')
       },
       {
-        path: '/xgmm',
-        name: 'xgmm',
-        component: () => import('../views/center/xgmm')
-      },
-      {
         path: '/wdpl',
         name: 'wdpl',
         component: () => import('../views/center/wdpl')
@@ -171,12 +160,6 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('../views/login/register')
-  },
-  // 修改资料
-  {
-    path: '/edit',
-    name: 'edit',
-    component: () => import('../views/edit')
   }
 ]
 

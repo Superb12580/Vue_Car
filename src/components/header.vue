@@ -8,7 +8,9 @@
       </div>
 
       <div class="people">
-        <img src="../assets/people.png" alt="头像"/>
+        <img v-if="!flag" src="../assets/搬砖.jpg" alt="头像"/>
+        <img v-else-if="user.photo" :src="user.photo">
+        <el-avatar v-else :size="60"> {{user.userName}} </el-avatar>
         <div class="others">
           <span v-show="flag">
             <el-link type="primary"  @click="center">个人中心</el-link>
@@ -40,7 +42,8 @@ export default {
   data () {
     return {
       flag: false,
-      text: ''
+      text: '',
+      user: {}
     }
   },
   methods: {
@@ -73,8 +76,16 @@ export default {
     }
   },
   created () {
-    if (this.$store.getters.GET_USER) {
+    const user = this.$store.getters.GET_USER
+    if (user) {
       this.flag = true
+      const that = this
+      this.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
+        that.user = rest.data.data
+        that.user.photo = require('../assets/' + rest.data.data.photo)
+      }, function (error) {
+        console.log(error)
+      })
     }
   }
 }
@@ -194,8 +205,8 @@ export default {
 
   .head .people img {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     position: relative;
     cursor: pointer;
@@ -213,7 +224,7 @@ export default {
     opacity: 0;
     z-index: 10;
     position: absolute;
-    top: 30px;
+    top: 60px;
     left: 0;
   }
 

@@ -8,15 +8,10 @@
           router
           background-color="#545c64"
           text-color="#fff"
-          active-text-color="#ffd04b"
-        ><!--          default-active="/grzl"-->
+          active-text-color="#ffd04b">
           <el-menu-item index="/grzl">
             <i class="el-icon-tickets"></i>
             <span slot="title">个人资料</span>
-          </el-menu-item>
-          <el-menu-item index="/xgmm">
-            <i class="el-icon-edit-outline"></i>
-            <span slot="title">修改密码</span>
           </el-menu-item>
           <el-menu-item index="/wddt">
             <i class="el-icon-news"></i>
@@ -42,7 +37,6 @@
             <i class="el-icon-view"></i>
             <span slot="title">我的关注</span>
           </el-menu-item>
-
           <el-menu-item index="/wdfs">
             <i class="el-icon-user"></i>
             <span slot="title">我的粉丝</span>

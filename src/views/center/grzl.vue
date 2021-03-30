@@ -1,7 +1,10 @@
 <template>
   <div>
     <div style="margin-left: 150px">
-      <div style="margin-bottom: 50px;margin-left: 250px"><el-avatar :size="80"> {{user.userName}} </el-avatar></div>
+      <div style="margin-bottom: 50px;margin-left: 270px">
+        <img style="width: 80px;height: 80px" v-if="user.photo" :src="user.photo">
+        <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
+      </div>
       <div style="margin-left: 80px">
         <el-badge :value="user.messageCount" :max="10" class="item" type="primary">
           <el-button size="small" @click="toMessage">消息</el-button>
@@ -15,6 +18,17 @@
       <el-badge :value="user.fansCount" :max="10" class="item" type="warning">
         <el-button size="small" @click="toFans">粉丝</el-button>
       </el-badge>
+        <el-dropdown style="margin-right: 20px">
+  <span class="el-dropdown-link">
+    更多<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item><el-button type="text" @click="dialogZlVisible = true, resetForm('zlForm')">编辑资料</el-button></el-dropdown-item>
+            <el-dropdown-item><el-button type="text" @click="dialogFormVisible = true, resetForm('ruleForm')">修改密码</el-button></el-dropdown-item>
+            <el-dropdown-item disabled divided>换绑邮箱</el-dropdown-item>
+            <el-dropdown-item disabled>忘记密码</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       <el-button @click="qd" v-if="user.graded===0" type="success" round>点击签到</el-button>
       <el-button v-if="user.graded===1" type="primary" round disabled>已签到</el-button>
       </div>
@@ -24,7 +38,7 @@
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>用户名：</h4></div></el-col>
         <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.userName}}</h4></div></el-col>
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>性别：</h4></div></el-col>
-        <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.gender}}</h4></div></el-col>
+        <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.gender === 1 ? '男' : '女'}}</h4></div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>邮箱：</h4></div></el-col>
@@ -39,6 +53,48 @@
         <el-col :span="6" ><div class="grid-content bg-purple"><h4>{{user.sign}}</h4></div></el-col>
       </el-row>
     </div>
+<!--    修改密码-->
+    <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="width: 1000px;margin: 0 auto">
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px">
+        <el-form-item label="旧密码" prop="password">
+          <el-input style="width: 300px" type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="newPassword">
+          <el-input style="width: 300px" type="password" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input style="width: 300px" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" style="margin-right: 150px;margin-bottom: 30px">
+        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+        <el-button @click="resetForm('ruleForm')">清空</el-button>
+      </div>
+    </el-dialog>
+<!--    编辑资料-->
+    <el-dialog title="编辑资料" :visible.sync="dialogZlVisible">
+    <el-form :model="zlForm" :rules="rulesZl" ref="zlForm" label-width="100px" class="demo-ruleForm" style="margin-left: 140px">
+      <el-form-item label="用户名" prop="userName">
+        <el-input style="width: 300px" v-model="zlForm.userName"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" prop="gender">
+        <el-radio-group v-model="zlForm.gender">
+          <el-radio label="男"></el-radio>
+          <el-radio label="女"></el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="出生日期" prop="dateBirth">
+        <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="zlForm.dateBirth" style="width: 300px"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="签名" prop="sign">
+        <el-input type="textarea" style="width: 300px" v-model="zlForm.sign"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitZlForm ('zlForm')">保存</el-button>
+        <el-button @click="resetForm ('zlForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
+    </el-dialog>
   </div>
 </template>
 <!--个人资料-->
@@ -48,7 +104,30 @@ export default {
   // 页面刷新
   inject: ['reload'],
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.ruleForm.newPassword) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
+      // 图片上传3
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
       user: {
         userId: '',
         userName: '张三',
@@ -64,10 +143,88 @@ export default {
         attentionCount: 35,
         fansCount: 35,
         messageCount: 35
+      },
+      dialogFormVisible: false,
+      dialogZlVisible: false,
+      ruleForm: {
+        password: '',
+        newPassword: '',
+        checkPass: '',
+        userId: ''
+      },
+      rules: {
+        password: { required: true, message: '请输入密码', trigger: 'blur' },
+        newPassword: { required: true, validator: validatePass, trigger: 'blur' },
+        checkPass: { required: true, validator: validatePass2, trigger: 'blur' }
+      },
+      zlForm: {
+        userId: '',
+        userName: '',
+        gender: '',
+        dateBirth: '',
+        sign: ''
+      },
+      rulesZl: {
+        userName: [
+          { required: true, message: '请输入用户名', trigger: 'change' },
+          { min: 1, max: 12, message: '长度在 1 到 12 个字符', trigger: 'change' }
+        ],
+        gender: [
+          { required: true, message: '请选择性别', trigger: 'change' }
+        ],
+        dateBirth: { required: true, message: '请选择日期', trigger: 'change' }
       }
     }
   },
   methods: {
+    // 修改密码
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const that = this
+          that.ruleForm.userId = that.$store.getters.GET_USER.userId
+          this.$http.post('/user/password', that.ruleForm).then(function (rest) {
+            const data = rest.data
+            that.msg(data.msg)
+            if (data.code === 200) {
+              that.dialogFormVisible = false
+            }
+            that.resetForm('ruleForm')
+          }, function (error) {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 编辑资料
+    submitZlForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const that = this
+          that.zlForm.gender = that.zlForm.gender === '男' ? 1 : 0
+          this.$http.post('/user/put', that.zlForm).then(function (rest) {
+            const data = rest.data
+            that.msg(data.msg)
+            if (data.code === 200) {
+              that.dialogZlVisible = false
+              that.reload()
+            }
+            that.resetForm('zlForm')
+          }, function (error) {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
     // 签到
     qd () {
       const that = this
@@ -104,6 +261,13 @@ export default {
     const that = this
     this.$http.get('/user/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.user = rest.data.data
+      that.user.photo = require('../../assets/' + rest.data.data.photo)
+      // 编辑资料回显
+      that.zlForm.userId = rest.data.data.userId
+      that.zlForm.userName = rest.data.data.userName
+      that.zlForm.dateBirth = rest.data.data.dateBirth
+      that.zlForm.sign = rest.data.data.sign
+      that.zlForm.gender = that.zlForm.gender === 1 ? '男' : '女'
     }, function (error) {
       console.log(error)
     })
@@ -112,6 +276,13 @@ export default {
 </script>
 
 <style scoped>
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
   .item {
     margin-top: 10px;
     margin-right: 40px;
