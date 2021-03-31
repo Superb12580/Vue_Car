@@ -79,13 +79,17 @@ export default {
     const user = this.$store.getters.GET_USER
     if (user) {
       this.flag = true
-      const that = this
-      this.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
-        that.user = rest.data.data
-        that.user.photo = require('../assets/' + rest.data.data.photo)
-      }, function (error) {
-        console.log(error)
-      })
+      // const that = this
+      // this.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
+      //   that.user = rest.data.data
+      //   that.user.photo = require('../assets/' + rest.data.data.photo)
+      // }, function (error) {
+      //   console.log(error)
+      // })
+      this.user = user
+      if (user.photo) {
+        this.user.photo = require('../assets/' + user.photo)
+      }
     }
   }
 }

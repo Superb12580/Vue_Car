@@ -335,7 +335,9 @@ export default {
         that.imgDb = rest.data.data
         // 动态照片
         for (const i in rest.data.data) {
-          that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
+          if (rest.data.data[i].stylePhoto) {
+            that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -349,7 +351,9 @@ export default {
       that.imgLbt = rest.data.data
       // 动态照片
       for (const i in rest.data.data) {
-        that.imgLbt[i].src = require('../assets/' + rest.data.data[i].imgLbt)
+        if (rest.data.data[i].imgLbt) {
+          that.imgLbt[i].src = require('../assets/' + rest.data.data[i].imgLbt)
+        }
       }
     }, function (error) {
       console.log(error)
@@ -359,7 +363,9 @@ export default {
       that.imgDb = rest.data.data
       // 动态照片
       for (const i in rest.data.data) {
-        that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
+        if (rest.data.data[i].stylePhoto) {
+          that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
+        }
       }
     }, function (error) {
       console.log(error)
@@ -368,7 +374,9 @@ export default {
     this.$http.get('/fold/item').then(function (rest) {
       that.imgZb = rest.data.data
       // 动态照片
-      that.imgZb.style_photo = require('../assets/' + rest.data.data.style_photo)
+      if (rest.data.data.style_photo) {
+        that.imgZb.style_photo = require('../assets/' + rest.data.data.style_photo)
+      }
       that.imgZb.activeName = '1'
     }, function (error) {
       console.log(error)
@@ -378,7 +386,9 @@ export default {
       that.zxLbt = rest.data.data
       // 动态照片
       for (const i in rest.data.data) {
-        that.zxLbt[i].newsPhoto = require('../assets/' + rest.data.data[i].newsPhoto)
+        if (rest.data.data[i].newsPhoto) {
+          that.zxLbt[i].newsPhoto = require('../assets/' + rest.data.data[i].newsPhoto)
+        }
       }
     }, function (error) {
       console.log(error)

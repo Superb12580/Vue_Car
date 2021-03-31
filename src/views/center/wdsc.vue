@@ -54,7 +54,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+          if (rest.data.data.records[i].style.stylePhoto) {
+            that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -66,7 +68,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+          if (rest.data.data.records[i].style.stylePhoto) {
+            that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -79,7 +83,9 @@ export default {
       that.page = rest.data.data
       // 动态照片
       for (const i in rest.data.data.records) {
-        that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+        if (rest.data.data.records[i].style.stylePhoto) {
+          that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
+        }
       }
     }, function (error) {
       console.log(error)

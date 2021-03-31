@@ -125,7 +125,9 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -137,7 +139,9 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -149,7 +153,9 @@ export default {
         that.pageForward = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+          if (rest.data.data.records[i].essay.user.photo) {
+            that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -161,7 +167,9 @@ export default {
         that.pageForward = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+          if (rest.data.data.records[i].essay.user.photo) {
+            that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -241,7 +249,9 @@ export default {
       that.page = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+        if (rest.data.data.records[i].user.photo) {
+          that.page.records[i].user.photo = require('../assets/' + rest.data.data.records[i].user.photo)
+        }
       }
     }, function (error) {
       console.log(error)
@@ -250,7 +260,9 @@ export default {
       that.pageForward = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+        if (rest.data.data.records[i].essay.user.photo) {
+          that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
+        }
       }
     }, function (error) {
       console.log(error)

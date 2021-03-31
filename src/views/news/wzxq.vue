@@ -120,7 +120,9 @@ export default {
         that.cjh = rest.data.data
         // 照片
         for (const i in rest.data.data) {
-          that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
+          if (rest.data.data[i].photo) {
+            that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -134,12 +136,18 @@ export default {
     this.$http.get('/news/itemXq?id=' + id).then(function (rest) {
       that.news = rest.data.data
       // 相关车型照片
-      that.news.style.stylePhoto = require('../../assets/' + rest.data.data.style.stylePhoto)
+      if (rest.data.data.style.stylePhoto) {
+        that.news.style.stylePhoto = require('../../assets/' + rest.data.data.style.stylePhoto)
+      }
       // 作者照片
-      that.news.user.photo = require('../../assets/' + rest.data.data.user.photo)
+      if (rest.data.data.user.photo) {
+        that.news.user.photo = require('../../assets/' + rest.data.data.user.photo)
+      }
       // 文章照片
       for (const i in rest.data.data.photo) {
-        that.news.photo[i].photoUrl = require('../../assets/' + rest.data.data.photo[i].photoUrl)
+        if (rest.data.data.photo[i].photoUrl) {
+          that.news.photo[i].photoUrl = require('../../assets/' + rest.data.data.photo[i].photoUrl)
+        }
       }
     }, function (error) {
       console.log(error)
@@ -149,7 +157,9 @@ export default {
       that.cjh = rest.data.data
       // 照片
       for (const i in rest.data.data) {
-        that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
+        if (rest.data.data[i].photo) {
+          that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
+        }
       }
     }, function (error) {
       console.log(error)

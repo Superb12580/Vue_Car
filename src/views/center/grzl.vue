@@ -210,6 +210,8 @@ export default {
             that.msg(data.msg)
             if (data.code === 200) {
               that.dialogZlVisible = false
+              // 更新store
+              that.$store.commit('SET_USER', data.data)
               that.reload()
             }
             that.resetForm('zlForm')
@@ -261,13 +263,15 @@ export default {
     const that = this
     this.$http.get('/user/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.user = rest.data.data
-      that.user.photo = require('../../assets/' + rest.data.data.photo)
+      if (rest.data.data.photo) {
+        that.user.photo = require('../../assets/' + rest.data.data.photo)
+      }
       // 编辑资料回显
       that.zlForm.userId = rest.data.data.userId
       that.zlForm.userName = rest.data.data.userName
       that.zlForm.dateBirth = rest.data.data.dateBirth
       that.zlForm.sign = rest.data.data.sign
-      that.zlForm.gender = that.zlForm.gender === 1 ? '男' : '女'
+      that.zlForm.gender = rest.data.data.gender === '1' ? '男' : '女'
     }, function (error) {
       console.log(error)
     })

@@ -133,7 +133,9 @@ export default {
         that.page = rest.data.data
         // 照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -145,7 +147,9 @@ export default {
         that.page = rest.data.data
         // 照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -300,12 +304,10 @@ export default {
       const user = this.$store.getters.GET_USER
       if (user) {
         // 登录人信息赋值
-        that.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
-          that.user = rest.data.data
-          that.user.photo = require('../../assets/' + rest.data.data.photo)
-        }, function (error) {
-          console.log(error)
-        })
+        that.user = user
+        if (user.photo) {
+          that.user.photo = require('../../assets/' + user.photo)
+        }
         that.flag = (rest.data.data.user.userId === user.userId)
       }
     })
@@ -314,7 +316,9 @@ export default {
       that.page = rest.data.data
       // 照片
       for (const i in rest.data.data.records) {
-        that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        if (rest.data.data.records[i].user.photo) {
+          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        }
       }
     })
   }

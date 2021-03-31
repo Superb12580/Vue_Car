@@ -110,7 +110,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          if (rest.data.data.records[i].newsPhoto) {
+            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -122,7 +124,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          if (rest.data.data.records[i].newsPhoto) {
+            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -138,7 +142,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          if (rest.data.data.records[i].newsPhoto) {
+            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          }
         }
       }, function (error) {
         console.log(error)
@@ -149,7 +155,9 @@ export default {
         that.page = rest.data.data
         // 动态照片
         for (const i in rest.data.data.records) {
-          that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          if (rest.data.data.records[i].newsPhoto) {
+            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
+          }
         }
       }, function (error) {
         console.log(error)
