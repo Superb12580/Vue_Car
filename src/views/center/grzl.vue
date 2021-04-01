@@ -2,8 +2,16 @@
   <div>
     <div style="margin-left: 150px">
       <div style="margin-bottom: 50px;margin-left: 270px">
-        <img style="width: 80px;height: 80px" v-if="user.photo" :src="user.photo">
-        <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
+        <el-upload
+          action="http://localhost:8081/car/user/upload"
+          :data="this.user"
+          :on-success="success"
+          :auto-upload="true">
+          <el-button>
+            <img style="width: 120px;height: 120px" v-if="user.photo" :src="user.photo">
+            <el-avatar v-else :size="120"> {{user.userName}} </el-avatar>
+          </el-button>
+        </el-upload>
       </div>
       <div style="margin-left: 80px">
         <el-badge :value="user.messageCount" :max="10" class="item" type="primary">
@@ -124,10 +132,6 @@ export default {
       }
     }
     return {
-      // 图片上传3
-      dialogImageUrl: '',
-      dialogVisible: false,
-      disabled: false,
       user: {
         userId: '',
         userName: '张三',
@@ -177,6 +181,12 @@ export default {
     }
   },
   methods: {
+    // 图片上传成功
+    success (response, file, fileList) {
+      this.msg(response.msg)
+      this.$store.commit('SET_USER', response.data)
+      this.reload()
+    },
     // 修改密码
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -214,7 +224,7 @@ export default {
               that.$store.commit('SET_USER', data.data)
               that.reload()
             }
-            that.resetForm('zlForm')
+            // that.resetForm('zlForm')
           }, function (error) {
             console.log(error)
           })
@@ -232,7 +242,8 @@ export default {
       const that = this
       this.$http.post('/user/grade', { userId: that.$store.getters.GET_USER.userId }).then(function (rest) {
         const code = rest.data
-        that.reload()
+        that.user.graded = 1
+        that.user.grade = that.user.grade + 10
         that.msg(code.msg)
       }, function (error) {
         console.log(error)
@@ -263,15 +274,12 @@ export default {
     const that = this
     this.$http.get('/user/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.user = rest.data.data
-      if (rest.data.data.photo) {
-        that.user.photo = require('../../assets/' + rest.data.data.photo)
-      }
       // 编辑资料回显
       that.zlForm.userId = rest.data.data.userId
       that.zlForm.userName = rest.data.data.userName
       that.zlForm.dateBirth = rest.data.data.dateBirth
+      that.zlForm.gender = rest.data.data.gender === 1 ? '男' : '女'
       that.zlForm.sign = rest.data.data.sign
-      that.zlForm.gender = rest.data.data.gender === '1' ? '男' : '女'
     }, function (error) {
       console.log(error)
     })

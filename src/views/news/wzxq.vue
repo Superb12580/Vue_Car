@@ -126,12 +126,6 @@ export default {
       const that = this
       this.$http.get('/user/listCjh').then(function (rest) {
         that.cjh = rest.data.data
-        // 照片
-        for (const i in rest.data.data) {
-          if (rest.data.data[i].photo) {
-            that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -143,32 +137,12 @@ export default {
     // 初始化文章详情
     this.$http.get('/news/itemXq?id=' + id).then(function (rest) {
       that.news = rest.data.data
-      // 相关车型照片
-      if (rest.data.data.style.stylePhoto) {
-        that.news.style.stylePhoto = require('../../assets/' + rest.data.data.style.stylePhoto)
-      }
-      // 作者照片
-      if (rest.data.data.user.photo) {
-        that.news.user.photo = require('../../assets/' + rest.data.data.user.photo)
-      }
-      // 文章照片
-      for (const i in rest.data.data.photo) {
-        if (rest.data.data.photo[i].photoUrl) {
-          that.news.photo[i].photoUrl = require('../../assets/' + rest.data.data.photo[i].photoUrl)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
     // 车家号
     this.$http.get('/user/listCjh').then(function (rest) {
       that.cjh = rest.data.data
-      // 照片
-      for (const i in rest.data.data) {
-        if (rest.data.data[i].photo) {
-          that.cjh[i].photo = require('../../assets/' + rest.data.data[i].photo)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
@@ -286,7 +260,7 @@ export default {
     bottom: 4px;
     right: 4px;
     background-size: 18px 18px;
-    background: url(../../assets/vip.png) no-repeat;
+    background: url(../../assets/static/vip.png) no-repeat;
     background-position: center;
   }
   .fn-left {

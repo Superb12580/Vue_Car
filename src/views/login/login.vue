@@ -2,9 +2,9 @@
   <div id="login">
     <el-container>
       <el-header>
-        <router-link :to="{name: 'home'}"><img src="../../assets/logo.png"></router-link>
+        <router-link :to="{name: 'home'}"><img src="../../assets/static/logo.png"></router-link>
       </el-header>
-      <el-main>
+      <el-main style="margin-top: 50px">
         <el-form id="form" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="userName">
             <el-input v-model="ruleForm.userName" placeholder="用户名或邮箱"></el-input>

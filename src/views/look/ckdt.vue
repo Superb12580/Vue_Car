@@ -136,12 +136,6 @@ export default {
       const that = this
       this.$http.get('/essay/user?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -150,12 +144,6 @@ export default {
       const that = this
       this.$http.get('/essay/user?userId=' + that.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -164,12 +152,6 @@ export default {
       const that = this
       this.$http.get('/forward/item?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.pageForward = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-            that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -178,12 +160,6 @@ export default {
       const that = this
       this.$http.get('/forward/item?userId=' + that.userId + '&size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
         that.pageForward = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-            that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -262,23 +238,11 @@ export default {
     const that = this
     this.$http.get('/essay/user?userId=' + that.userId).then(function (rest) {
       that.page = rest.data.data
-      // 处理照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].user.photo) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
     this.$http.get('/forward/item?userId=' + that.userId).then(function (rest) {
       that.pageForward = rest.data.data
-      // 处理照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-          that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
@@ -290,6 +254,9 @@ export default {
   a {
     color: #000;
     text-decoration: none;
+  }
+  a:hover {
+    color: red;
   }
   .item {
     margin-top: 10px;

@@ -143,6 +143,6 @@ export default {
     text-decoration: none;
   }
   a:hover {
-    color: #ff6700;
+    color: red;
   }
 </style>

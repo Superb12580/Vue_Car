@@ -86,12 +86,6 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-            that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -100,12 +94,6 @@ export default {
       const that = this
       this.$http.get('/comment/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.userId).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-            that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -181,12 +169,6 @@ export default {
     const that = this
     this.$http.get('/comment/item?userId=' + this.userId).then(function (rest) {
       that.page = rest.data.data
-      // 处理照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
-          that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
@@ -195,6 +177,9 @@ export default {
 </script>
 
 <style scoped>
+  a:hover {
+    color: red;
+  }
   .item {
     margin-top: 10px;
     margin-right: 40px;

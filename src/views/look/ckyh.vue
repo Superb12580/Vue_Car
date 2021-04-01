@@ -135,9 +135,6 @@ export default {
     const that = this
     this.$http.get('/user/item?userId=' + userId + '&thatId=' + thatId).then(function (rest) {
       that.user = rest.data.data
-      if (rest.data.data.photo) {
-        that.user.photo = require('../../assets/' + rest.data.data.photo)
-      }
     }, function (error) {
       console.log(error)
     })

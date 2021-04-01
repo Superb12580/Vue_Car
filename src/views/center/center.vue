@@ -57,9 +57,6 @@ export default {
 }
 </script>
 <style scoped>
-/* .home {
-  margin-top: 10px;
-} */
 .el-menu-item{
   text-align: left;
   border-bottom: 1px solid gray;
@@ -68,18 +65,12 @@ export default {
   /* display: inline-block; */
   float: left;
   width: 200px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .main-col{
   display: inline-block;
   width: calc(100% - 200px);
-  margin-top: 50px;
-}
-.home {
-  background-color: #eee;
-  padding-top: 10px;
-  height: 105px;
-  margin-bottom: 10px;
+  margin-top: 30px;
 }
 
 .home .center a {

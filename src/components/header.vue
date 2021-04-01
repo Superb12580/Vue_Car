@@ -8,15 +8,15 @@
       </div>
 
       <div class="people">
-        <img v-if="!flag" src="../assets/搬砖.jpg" alt="头像"/>
+        <img v-if="!user" src="../assets/static/搬砖.jpg" alt="头像"/>
         <img v-else-if="user.photo" :src="user.photo">
         <el-avatar v-else :size="60"> {{user.userName}} </el-avatar>
         <div class="others">
-          <span v-show="flag">
+          <span v-show="user">
             <el-link type="primary"  @click="center">个人中心</el-link>
             <el-link type="danger" @click="layout">注 销</el-link>
           </span>
-          <span v-show="!flag">
+          <span v-show="!user">
             <router-link to="/login">登 录</router-link>
             <router-link to="/register">注 册</router-link>
           </span>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="center">
-      <router-link :to="{name: 'home'}"><img src="../assets/logo.png" alt="汽车之家" class="logo"/></router-link>
+      <router-link :to="{name: 'home'}"><img style="width: 370px" src="../assets/static/logo.png" alt="汽车之家" class="logo"/></router-link>
       <div class="title">
         <router-link to="/">首 页</router-link>
         <router-link to="/xc">选 车</router-link>
@@ -41,7 +41,6 @@ export default {
   name: 'Header',
   data () {
     return {
-      flag: false,
       text: '',
       user: {}
     }
@@ -76,37 +75,21 @@ export default {
     }
   },
   created () {
-    const user = this.$store.getters.GET_USER
-    if (user) {
-      this.flag = true
-      // const that = this
-      // this.$http.get('/user/user?userId=' + user.userId).then(function (rest) {
-      //   that.user = rest.data.data
-      //   that.user.photo = require('../assets/' + rest.data.data.photo)
-      // }, function (error) {
-      //   console.log(error)
-      // })
-      this.user = user
-      if (user.photo) {
-        this.user.photo = require('../assets/' + user.photo)
-      }
-    }
+    this.user = this.$store.getters.GET_USER
   }
 }
 </script>
 
 <style scoped>
   .aside-col {
-    /* display: inline-block; */
     float: left;
     width: 200px;
   }
 
   .home {
-    background-color: #eee;
-    padding-top: 10px;
-    height: 105px;
-    margin-bottom: 10px;
+    /*background-color: #eee;*/
+    padding: 10px 0;
+    /*border: 1px solid #ccc;*/
   }
 
   .home .center a {
@@ -160,6 +143,7 @@ export default {
 
   .home .center {
     position: relative;
+    width: 1150px;
   }
 
   .home .center .logo {
@@ -175,7 +159,7 @@ export default {
     height: 40px;
     line-height: 40px;
     margin-top: 20px;
-    margin-left: 300px;
+    margin-left: 260px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     z-index: 0;
@@ -223,7 +207,7 @@ export default {
 
   .head .people .others {
     width: 100px;
-    height: 100px;
+    height: 70px;
     background-color: #fff;
     opacity: 0;
     z-index: 10;

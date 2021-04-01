@@ -382,7 +382,7 @@ export default {
     height: 800px;
     margin: 0 auto;
     padding: 60px 0 20px;
-    background: url(../../assets/bg.png) #fff center 70px no-repeat;
+    background: url(../../assets/static/bg.png) #fff center 70px no-repeat;
   }
 
   .center .box {
@@ -415,7 +415,7 @@ export default {
     top: 50%;
     left: 0;
     margin-top: -16px;
-    background-image: url(../../assets/icon.png);
+    background-image: url(../../assets/static/icon.png);
     background-repeat: no-repeat;
   }
 
@@ -505,7 +505,7 @@ export default {
     color: #ff6000;
     font-size: 12px;
     font-weight: normal;
-    background-image: url(../../assets/jg.png);
+    background-image: url(../../assets/static/jg.png);
     background-repeat: no-repeat;
     display: none;
   }
@@ -526,7 +526,7 @@ export default {
     text-align: center;
     top: 0;
     right: 0;
-    background: url(../../assets/reate.png) center no-repeat;
+    background: url(../../assets/static/reate.png) center no-repeat;
     display: none;
   }
 
@@ -628,7 +628,7 @@ export default {
   .footer .had a {
     color: #ff6000;
     padding-right: 20px;
-    background: url(../../assets/right.png) right center no-repeat;
+    background: url(../../assets/static/right.png) right center no-repeat;
   }
 
   .footer .had a:hover {
@@ -642,7 +642,7 @@ export default {
     position: absolute;
     left: -241px;
     bottom: -10px;
-    background-image: url(../../assets/bottom.png);
+    background-image: url(../../assets/static/bottom.png);
     background-repeat: no-repeat;
     z-index: 1000000;
   }

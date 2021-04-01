@@ -56,12 +56,6 @@ export default {
       const that = this
       this.$http.get('/attention/item?thisId=' + that.$store.getters.GET_USER.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -70,12 +64,6 @@ export default {
       const that = this
       this.$http.get('/attention/item?thisId=' + that.$store.getters.GET_USER.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 处理照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -103,12 +91,6 @@ export default {
     const that = this
     this.$http.get('/attention/item?thisId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.page = rest.data.data
-      // 处理照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].user.photo) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-        }
-      }
     }, function (error) {
       console.log(error)
     })

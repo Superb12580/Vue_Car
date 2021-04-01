@@ -2,22 +2,22 @@
   <div>
   <Header></Header>
 <!--    车类别开始-->
-    <div class="box2" style="margin: 50px auto">
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
-      <router-link class="item2" :to="{name: 'ckyh',query: {userId: 1}}"></router-link>
+    <div class="box2" style="margin: 30px auto">
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
     </div>
 <!--    车类别结束-->
 <!--    头部轮播图开始-->
     <div style="margin: 25px auto">
       <el-carousel :interval="4000" type="card" height="300px" style="width: 1200px;margin: 0 auto">
         <el-carousel-item v-for="(item,index) in imgLbt" :key="index">
-          <img :src="item.src" style="height: 300px">
+          <img :src="item.imgLbt" style="height: 300px">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -27,34 +27,34 @@
     <div class="box">
       <div class="top">
         <h2>热门品牌</h2>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">更多品牌 ></router-link>
+        <router-link :to="{name: '',query: {cs: 1}}">更多品牌 ></router-link>
       </div>
       <div class="items">
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/奥迪.png" alt="" />
           <span>奥迪</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/奔驰.png" alt="" />
           <span>奔驰</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/宝马.png" alt="" />
           <span>宝马</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/本田.png" alt="" />
           <span>本田</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/长城.png" alt="" />
           <span>长城</span>
@@ -62,31 +62,31 @@
         </router-link>
       </div>
       <div class="items">
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/大众.png" alt="" />
           <span>大众</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/丰田.png" alt="" />
           <span>丰田</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/福特.png" alt="" />
           <span>福特</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/日产.png" alt="" />
           <span>日产</span>
         </div>
         </router-link>
-        <router-link :to="{name: 'ckyh',query: {userId: 1}}">
+        <router-link :to="{name: '',query: {cs: 1}}">
         <div class="item">
           <img src="../assets/carType/雪佛兰.png" alt="" />
           <span>雪佛兰</span>
@@ -243,19 +243,9 @@ export default {
   data () {
     return {
       // 轮播图
-      imgLbt: [
-        { src: require('../assets/carLbt/1.jpg'), styId: '1' },
-        { src: require('../assets/carLbt/2.jpg'), styId: '2' },
-        { src: require('../assets/carLbt/3.jpg'), styId: '3' },
-        { src: require('../assets/carLbt/4.jpg'), styId: '4' }
-      ],
+      imgLbt: [],
       // 文章纵向轮播
-      zxLbt: [
-        { newsPhoto: require('../assets/carWzzs/1.jpg'), styId: '1' },
-        { newsPhoto: require('../assets/carWzzs/2.jpg'), styId: '2' },
-        { newsPhoto: require('../assets/carWzzs/3.jpg'), styId: '3' },
-        { newsPhoto: require('../assets/carWzzs/4.jpg'), styId: '4' }
-      ],
+      zxLbt: [],
       // 文章推荐
       wzTj: [
         {
@@ -304,7 +294,7 @@ export default {
       // 折叠
       imgZb: {
         activeName: '',
-        style_photo: require('../assets/carZb/1.jpg'),
+        style_photo: '',
         style_id: 1,
         title1: '一致性 Consistency',
         a_text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
@@ -320,12 +310,7 @@ export default {
         d_text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。'
       },
       // 底部轮播
-      imgDb: [
-        { stylePhoto: require('../assets/carDb/1.jpg'), styleName: '奔驰E级', sssj: '2017-12-11', styleId: 1 },
-        { stylePhoto: require('../assets/carDb/2.jpg'), styleName: '宝马3系', sssj: '2017-12-11', styleId: 2 },
-        { stylePhoto: require('../assets/carDb/3.jpg'), styleName: '奥迪A6L', sssj: '2017-12-11', styleId: 3 },
-        { stylePhoto: require('../assets/carDb/4.jpg'), styleName: '五菱神车', sssj: '2017-12-11', styleId: 4 }
-      ]
+      imgDb: []
     }
   },
   methods: {
@@ -333,12 +318,6 @@ export default {
       const that = this
       this.$http.get('/style/item').then(function (rest) {
         that.imgDb = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data) {
-          if (rest.data.data[i].stylePhoto) {
-            that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -349,34 +328,18 @@ export default {
     // 轮播图初始化
     this.$http.get('/style/itemLbt').then(function (rest) {
       that.imgLbt = rest.data.data
-      // 动态照片
-      for (const i in rest.data.data) {
-        if (rest.data.data[i].imgLbt) {
-          that.imgLbt[i].src = require('../assets/' + rest.data.data[i].imgLbt)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
     // 底部初始化
     this.$http.get('/style/item').then(function (rest) {
       that.imgDb = rest.data.data
-      // 动态照片
-      for (const i in rest.data.data) {
-        if (rest.data.data[i].stylePhoto) {
-          that.imgDb[i].stylePhoto = require('../assets/' + rest.data.data[i].stylePhoto)
-        }
-      }
     }, function (error) {
       console.log(error)
     })
     // 中部
     this.$http.get('/fold/item').then(function (rest) {
       that.imgZb = rest.data.data
-      // 动态照片
-      if (rest.data.data.style_photo) {
-        that.imgZb.style_photo = require('../assets/' + rest.data.data.style_photo)
-      }
       that.imgZb.activeName = '1'
     }, function (error) {
       console.log(error)
@@ -384,12 +347,6 @@ export default {
     // 文章轮播图初始化
     this.$http.get('/news/itemLbt').then(function (rest) {
       that.zxLbt = rest.data.data
-      // 动态照片
-      for (const i in rest.data.data) {
-        if (rest.data.data[i].newsPhoto) {
-          that.zxLbt[i].newsPhoto = require('../assets/' + rest.data.data[i].newsPhoto)
-        }
-      }
     }, function (error) {
       console.log(error)
     })

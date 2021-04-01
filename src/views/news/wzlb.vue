@@ -52,7 +52,46 @@
         </ul>
       </div>
 <!--      友情链接-->
-      <div class="yqlj"></div>
+        <div class="footer">
+          <div class="footer1">
+            <h2>友情链接</h2>
+            <div class="cars">
+              <span>今日头条</span>
+              <span>爱卡汽车</span>
+              <span>58汽车</span>
+              <span>驾考宝典</span>
+              <span>网通社汽车</span>
+              <span>360汽车</span>
+              <span>新浪汽车</span>
+              <span>电动邦</span>
+              <span>太平洋汽车</span>
+              <span>大搜车家选</span>
+              <span>24车汽车资讯</span>
+              <span>车质网</span>
+              <span>车秀网</span>
+              <span>狮桥二手车</span>
+              <span>卡车之家</span>
+            </div>
+          </div>
+          <div class="footer2">
+            <p class="connect">© 2021 懂车帝 www.dongchedi.com</p>
+            <p class="connect">京公网安备 11010802026035号</p>
+
+            <p class="connect">京ICP备17027026号-1</p>
+
+            <p class="connect">增值电信业务经营许可证（京B2-20180202）</p>
+
+            <p class="connect">违法和不良信息举报电话：400-140-2108</p>
+
+            <p class="connect">中央网信办违法和不良信息举报中心</p>
+            <p class="connect">网络文化经营许可证-京网文（2019）4715-493号</p>
+            <span class="connect">懂车帝用户协议</span> |
+
+            <span class="connect">懂车帝隐私政策</span> | <span class="connect">营业执照</span>
+
+            <p><a href="#">侵权投诉</a> | <a href="#">我要反馈</a></p>
+          </div>
+        </div>
     </div>
     <div style="width: 1px;height: 1360px;background-color: #ff6700;float: right;margin-right: 20px"></div>
     <div v-if="page.total !== 0" class="left2">
@@ -119,12 +158,6 @@ export default {
       const that = this
       this.$http.get('/news/list?size=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].newsPhoto) {
-            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -133,12 +166,6 @@ export default {
       const that = this
       this.$http.get('/news/list?size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].newsPhoto) {
-            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -151,12 +178,6 @@ export default {
     if (!thatId) {
       this.$http.get('/news/list').then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].newsPhoto) {
-            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -164,12 +185,6 @@ export default {
       // 个人
       this.$http.get('/news/item?userId=' + thatId).then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].newsPhoto) {
-            that.page.records[i].newsPhoto = require('../../assets/' + rest.data.data.records[i].newsPhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -190,6 +205,36 @@ export default {
 </script>
 
 <style scoped>
+  .footer {
+    float: right;
+    width: 340px;
+    margin: 30px auto;
+    line-height: 20px;
+    padding: 16px 20px;
+    font-size: 12px;
+    color: #666;
+    background-color: #f7f8fc;
+  }
+  .footer .footer2 p {
+    display: block;
+  }
+  .footer .footer2 p a{
+    text-decoration: none;
+    font-weight: 600;
+    color: #666;
+  }
+  .footer .footer1{
+    margin-bottom: 20px;
+  }
+
+  .footer .footer1 .cars {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .footer .footer1 .cars span {
+    font-size: 14px;
+    padding: 10px 25px 10px 0;
+  }
   .right2 {
     width: 400px;
     height: 1800px;
@@ -227,19 +272,13 @@ export default {
     height: 280px;
     margin: 20px;
   }
-  .yqlj {
-    width: 360px;
-    height: 500px;
-    background-color: #409EFF;
-    margin: 20px;
-    float: right;
-  }
+
   a {
     text-decoration: none;
     color: #1f2129;
   }
   a:hover {
-    color: #ff6700;
+    color: red;
   }
 /*  */
   .clearfix::after {

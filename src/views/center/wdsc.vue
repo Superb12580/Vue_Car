@@ -52,12 +52,6 @@ export default {
       const that = this
       this.$http.get('/collection/item?size=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].style.stylePhoto) {
-            that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -66,12 +60,6 @@ export default {
       const that = this
       this.$http.get('/collection/item?size=' + that.page.size + '&current=' + val + '&userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
         that.page = rest.data.data
-        // 动态照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].style.stylePhoto) {
-            that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -81,12 +69,6 @@ export default {
     const that = this
     this.$http.get('/collection/item?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
       that.page = rest.data.data
-      // 动态照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].style.stylePhoto) {
-          that.page.records[i].style.stylePhoto = require('../../assets/' + rest.data.data.records[i].style.stylePhoto)
-        }
-      }
     }, function (error) {
       console.log(error)
     })

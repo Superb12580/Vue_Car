@@ -32,7 +32,7 @@
         </div>
         <div class="call">
           <div class="left">
-            <img style="width: 60px;height: 60px" v-if="user.userId === 0" src="../../assets/搬砖.jpg" alt="logo" />
+            <img style="width: 60px;height: 60px" v-if="user.userId === 0" src="src/assets/static/搬砖.jpg" alt="logo" />
             <img style="width: 60px;height: 60px" v-else-if="user.photo" :src="user.photo">
             <el-avatar v-else :size="60"> {{user.userName}} </el-avatar>
           </div>
@@ -141,12 +141,6 @@ export default {
       const that = this
       this.$http.get('/comment/itemByEssayId/?essayId=' + that.essay.essayId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -155,12 +149,6 @@ export default {
       const that = this
       this.$http.get('/comment/itemByEssayId/?essayId=' + that.essay.essayId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
-        // 照片
-        for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-          }
-        }
       }, function (error) {
         console.log(error)
       })
@@ -316,19 +304,11 @@ export default {
         that.flag = (rest.data.data.user.userId === user.userId)
         // 登录人信息赋值
         that.user = user
-        // alert(that.user.userId)
-        // that.user.photo = require('../../assets/' + user.photo)
       }
     })
     // 评论初始化
     this.$http.get('/comment/itemByEssayId/?essayId=' + essayId).then(rest => {
       that.page = rest.data.data
-      // 照片
-      for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].user.photo) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
-        }
-      }
     })
   }
 }
