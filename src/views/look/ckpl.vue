@@ -23,6 +23,9 @@
             </router-link>
             <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
             <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
+<!--            <h4 style="color: red" v-if="record.essay.essayLabel">-->
+<!--              <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>-->
+<!--            </h4>-->
             发表于 {{record.essay.createTime}}
             <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
               <el-button size="small" @click="forward(record.essay.essayId)">转发</el-button>
@@ -85,7 +88,7 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay.user.photo) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
             that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
@@ -99,7 +102,7 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay.user.photo) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
             that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
@@ -180,7 +183,7 @@ export default {
       that.page = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].essay.user.photo) {
+        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
           that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
         }
       }

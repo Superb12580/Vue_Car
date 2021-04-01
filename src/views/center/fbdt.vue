@@ -11,14 +11,22 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <div style="margin-bottom: 20px">
         <el-form-item label="标签" prop="essayLabel">
-      <el-select clearable style="width: 400px" v-model="ruleForm.essayLabel" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.labelId"
-          :label="item.labelText"
-          :value="item.labelId">
-        </el-option>
-      </el-select>
+<!--      <el-select clearable style="width: 400px" v-model="ruleForm.essayLabel" placeholder="请选择">-->
+<!--        <el-option-->
+<!--          v-for="item in options"-->
+<!--          :key="item.labelId"-->
+<!--          :label="item.labelText"-->
+<!--          :value="item.labelId">-->
+<!--        </el-option>-->
+<!--      </el-select>-->
+          <el-select style="width: 400px" v-model="ruleForm.essayLabel" multiple placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.labelId"
+              :label="item.labelText"
+              :value="item.labelId">
+            </el-option>
+          </el-select>
         </el-form-item>
       </div>
       <div @click="flag1">
@@ -52,7 +60,7 @@ export default {
         essayText: '',
         userId: '',
         // 标签值
-        essayLabel: ''
+        essayLabel: []
       },
       rules: {
         essayTitle: [

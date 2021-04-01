@@ -4,10 +4,12 @@
     <div v-if="page.total !== 0">
     <div>
       <el-timeline>
-        <el-timeline-item v-for='record in page.records' :key="index" placement="top">
+        <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
           <el-card>
             <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essayId}}">{{record.essayTitle}}</router-link></h2>
-            <h4 style="color: red" v-if="record.label">#{{record.label.labelText}}#</h4>
+            <h4 style="color: red" v-if="record.essayLabel">
+              <span style="margin-right: 20px" v-for="item in record.essayLabel">#{{item.labelText}}#</span>
+            </h4>
             发表于 {{record.createTime}}
             <el-badge :value="record.forwardCount" class="item2" type="primary">
               <el-button size="small" @click="forward(record.essayId)">转发</el-button>

@@ -1,13 +1,23 @@
 <template>
   <div>
     <Header></Header>
+    <div style="margin-top: 35px">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
+        <el-breadcrumb-item>动态详情</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="checkbox">
     <div class="detail">
       <div style="height: 100px">
         <h1 style="color: dodgerblue;">{{essay.essayTitle}}</h1>
-        <div style="margin-left: 800px">
+        <div style="float: right;margin-right: 30px">
           <el-button type="danger" circle icon="el-icon-delete" v-show="flag" @click="remove"></el-button>
         </div>
+        <h4 style="color: red" v-if="essay.label">
+          <span style="margin-right: 20px" v-for="item in essay.label">#{{item.labelText}}#</span>
+        </h4>
       </div>
       <el-divider></el-divider>
       <div class="markdown-body" v-html="essay.essayText"></div>
@@ -301,14 +311,13 @@ export default {
       const md = new MarkdownIt()
       that.essay.essayText = md.render(that.essay.essayText)
       // 按钮显示 只有当是本人登录时才显示
-      const user = this.$store.getters.GET_USER
+      const user = that.$store.getters.GET_USER
       if (user) {
+        that.flag = (rest.data.data.user.userId === user.userId)
         // 登录人信息赋值
         that.user = user
-        if (user.photo) {
-          that.user.photo = require('../../assets/' + user.photo)
-        }
-        that.flag = (rest.data.data.user.userId === user.userId)
+        // alert(that.user.userId)
+        // that.user.photo = require('../../assets/' + user.photo)
       }
     })
     // 评论初始化

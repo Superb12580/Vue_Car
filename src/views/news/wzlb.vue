@@ -1,7 +1,13 @@
 <template>
   <div>
     <Header></Header>
-    <div style="margin: 50px auto">
+    <div style="margin-top: 35px;">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>新闻列表</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div style="margin: 30px auto">
     <div class="right2">
 <!--      热门车型-->
       <div class="rmcx">
@@ -64,7 +70,12 @@
           <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{news.count}}</h5>
         </div>
         <!--新闻图-->
-        <div class="xwt"><router-link :to="{name: 'wzxq',query: {id: news.id}}"><img style="width: 100%;height: 100%" :src="news.newsPhoto"></router-link></div>
+        <div class="xwt">
+          <router-link :to="{name: 'wzxq',query: {id: news.id}}">
+            <img style="width: 100%;height: 100%" v-if="news.newsPhoto" :src="news.newsPhoto">
+            <img style="width: 100%;height: 100%" v-else src="../../assets/carWzzs/0.jpg">
+          </router-link>
+        </div>
       </div>
       <div style="float: left;margin: 30px 0 30px 50px">
         <el-pagination

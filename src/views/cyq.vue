@@ -1,8 +1,14 @@
 <template>
   <div>
     <Header></Header>
+    <div style="margin-top: 35px;">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>车友圈</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div v-if="page.total !== 0">
-    <div style="margin: 50px 0 20px 1200px">
+    <div style="margin: 0 0 20px 1200px">
       <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
@@ -16,7 +22,9 @@
                 <el-avatar v-else :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar>
               </router-link>
               <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essayId}}">{{record.essayTitle}}</router-link></h2>
-              <h4 style="color: red" v-if="record.label">#{{record.label.labelText}}#</h4>
+              <h4 style="color: red" v-if="record.essayLabel">
+                <span style="margin-right: 20px" v-for="item in record.essayLabel">#{{item.labelText}}#</span>
+              </h4>
               发表于 {{record.createTime}}
               <el-badge :value="record.forwardCount" class="item2" type="primary">
                 <el-button size="small" @click="forward(record.essayId)">转发</el-button>
@@ -57,7 +65,9 @@
                   <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
                 </router-link>
                 <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
-                <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
+                <h4 style="color: red" v-if="record.essay.essayLabel">
+                  <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>
+                </h4>
                 发表于 {{record.essay.createTime}}
                 <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
                   <el-button size="small" @click="forward(record.essay.essayId)">转发</el-button>
@@ -153,7 +163,7 @@ export default {
         that.pageForward = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay.user.photo) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
             that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
@@ -167,7 +177,7 @@ export default {
         that.pageForward = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].essay.user.photo) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
             that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
@@ -260,7 +270,7 @@ export default {
       that.pageForward = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].essay.user.photo) {
+        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
           that.pageForward.records[i].essay.user.photo = require('../assets/' + rest.data.data.records[i].essay.user.photo)
         }
       }

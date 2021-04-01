@@ -1,6 +1,13 @@
 <template>
   <div>
     <Header></Header>
+    <div style="margin-top: 35px;">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/wzlb' }">新闻列表</el-breadcrumb-item>
+        <el-breadcrumb-item>新闻详情</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="right">
 <!--      作者信息-->
       <div style="border: 1px solid #ccc;width: 370px;height: 330px;margin-left: 15px;padding-top: 20px">
@@ -37,6 +44,7 @@
                 <router-link :to="{name: 'ckyh',query: {userId: item.userId}}">
                   <img v-if="item.photo" :src="item.photo">
                   <el-avatar v-else :size="58"> {{item.userName}} </el-avatar>
+                  <i class="vip2"></i>
                 </router-link>
               </div>
               <div class="info2 fn-right" style="margin-top: 5px">
@@ -175,7 +183,7 @@ export default {
     margin-top: 30px;
   }
   .left2 {
-    margin-top: 45px;
+    margin-top: 5px;
     width: 880px;
   }
   .right {
@@ -278,7 +286,7 @@ export default {
     bottom: 4px;
     right: 4px;
     background-size: 18px 18px;
-    background: url(../../assets/a/vip.png) no-repeat;
+    background: url(../../assets/vip.png) no-repeat;
     background-position: center;
   }
   .fn-left {

@@ -6,15 +6,18 @@
       <el-timeline>
         <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
           <el-button style="float: right;margin-top: 20px" icon="el-icon-delete" type="text" @click="scpl(record.id, record.userId, record.essay.essayId)">删除</el-button>
-          <h3>{{record.commentText}}</h3>
+          <h3 v-if="record.commentText">{{record.commentText}}</h3>
+          <h3 v-else style="width: 15px;height: 10px;"></h3>
           <h5>评论于 {{record.createTime}}</h5>
           <el-card v-if="record.essay">
             <router-link :to="{name: 'ckyh',query: {userId: record.essay.userId}}">
-              <img style="width: 60px;height: 60px" v-if="record.user.photo" :src="record.user.photo">
+              <img style="width: 60px;height: 60px" v-if="record.essay.user.photo" :src="record.essay.user.photo">
               <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
             </router-link>
             <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
-            <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
+            <h4 style="color: red" v-if="record.essay.essayLabel">
+              <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>
+            </h4>
             发表于 {{record.essay.createTime}}
             <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
               <el-button size="small" @click="forward(record.essay.essayId)">转发</el-button>
@@ -71,8 +74,8 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
+            that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
       }, function (error) {
@@ -85,8 +88,8 @@ export default {
         that.page = rest.data.data
         // 处理照片
         for (const i in rest.data.data.records) {
-          if (rest.data.data.records[i].user.photo) {
-            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
+            that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
           }
         }
       }, function (error) {
@@ -164,8 +167,8 @@ export default {
       that.page = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].user.photo) {
-          that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
+          that.page.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
         }
       }
     }, function (error) {

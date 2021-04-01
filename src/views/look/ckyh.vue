@@ -31,7 +31,7 @@
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>用户名：</h4></div></el-col>
         <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.userName}}</h4></div></el-col>
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>性别：</h4></div></el-col>
-        <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.gender}}</h4></div></el-col>
+        <el-col :span="3" ><div class="grid-content bg-purple"><h4>{{user.gender === 1 ? '男' : '女'}}</h4></div></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="2" :offset="3"><div class="grid-content bg-purple"><h4>邮箱：</h4></div></el-col>

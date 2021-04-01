@@ -21,7 +21,9 @@
                 <el-avatar v-else :size="60" style="color: indianred"> {{record.user.userName}} </el-avatar>
               </router-link>
               <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essayId}}">{{record.essayTitle}}</router-link></h2>
-              <h4 style="color: red" v-if="record.label">#{{record.label.labelText}}#</h4>
+              <h4 style="color: red" v-if="record.essayLabel">
+                <span style="margin-right: 20px" v-for="item in record.essayLabel">#{{item.labelText}}#</span>
+              </h4>
               发表于 {{record.createTime}}
               <el-badge :value="record.forwardCount" class="item2" type="primary">
                 <el-button size="small" @click="forward(record.essayId)">转发</el-button>
@@ -62,7 +64,9 @@
                   <el-avatar v-else :size="60" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
                 </router-link>
                 <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
-                <h4 style="color: red" v-if="record.essay.label">#{{record.essay.label.labelText}}#</h4>
+                <h4 style="color: red" v-if="record.essay.essayLabel">
+                  <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>
+                </h4>
                 发表于 {{record.essay.createTime}}
                 <el-badge :value="record.essay.forwardCount" class="item2" type="primary">
                   <el-button size="small" @click="forward(record.essay.essayId)">转发</el-button>
@@ -132,6 +136,12 @@ export default {
       const that = this
       this.$http.get('/essay/user?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          }
+        }
       }, function (error) {
         console.log(error)
       })
@@ -140,6 +150,12 @@ export default {
       const that = this
       this.$http.get('/essay/user?userId=' + that.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          if (rest.data.data.records[i].user.photo) {
+            that.page.records[i].user.photo = require('../../assets/' + rest.data.data.records[i].user.photo)
+          }
+        }
       }, function (error) {
         console.log(error)
       })
@@ -148,6 +164,12 @@ export default {
       const that = this
       this.$http.get('/forward/item?userId=' + that.userId + '&size=' + val).then(function (rest) {
         that.pageForward = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
+            that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+          }
+        }
       }, function (error) {
         console.log(error)
       })
@@ -156,6 +178,12 @@ export default {
       const that = this
       this.$http.get('/forward/item?userId=' + that.userId + '&size=' + that.pageForward.size + '&current=' + val).then(function (rest) {
         that.pageForward = rest.data.data
+        // 处理照片
+        for (const i in rest.data.data.records) {
+          if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
+            that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
+          }
+        }
       }, function (error) {
         console.log(error)
       })
@@ -247,7 +275,7 @@ export default {
       that.pageForward = rest.data.data
       // 处理照片
       for (const i in rest.data.data.records) {
-        if (rest.data.data.records[i].essay.user.photo) {
+        if (rest.data.data.records[i].essay && rest.data.data.records[i].essay.user.photo) {
           that.pageForward.records[i].essay.user.photo = require('../../assets/' + rest.data.data.records[i].essay.user.photo)
         }
       }
