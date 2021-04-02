@@ -12,7 +12,7 @@
     <div v-if="page.total !== 0">
     <div>
       <el-timeline>
-        <el-timeline-item v-for='record in page.records' :key="index" placement="top">
+        <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
           <h2><router-link :to="{name: 'ckyh',query: {userId: record.userId}}">{{record.user.userName}}</router-link><i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /> </i></h2>
           <h3>{{record.commentText}}</h3>
           <h5>评论于 {{record.createTime}}</h5>
@@ -34,7 +34,7 @@
               <el-button size="small" @click="agree(record.essay.essayId)">点赞</el-button>
             </el-badge>
             <el-badge :value="record.essay.commentCount" class="item" type="warning">
-              <el-button size="small">评论</el-button>
+              <el-button size="small" @click="comment(record.essay.essayId)">评论</el-button>
             </el-badge>
           </el-card>
           <el-card v-else>
@@ -108,6 +108,36 @@ export default {
         return false
       }
       this.$router.push('/fbdt')
+    },
+    // 评论
+    comment (essayId) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      this.$prompt('说说你的看法...', '评论', {
+        confirmButtonText: '评论',
+        cancelButtonText: '取消',
+        inputPattern: /[^]/,
+        inputErrorMessage: '说点什么吧...'
+      }).then(({ value }) => {
+        const that = this
+        this.$http.post('/comment/add', { userId: user.userId, essayId: essayId, commentText: value }).then(rest => {
+          that.reload()
+        })
+        this.$message({
+          type: 'success',
+          message: '已评论 ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消评论'
+        })
+      })
     },
     // 转发
     forward (essayId) {

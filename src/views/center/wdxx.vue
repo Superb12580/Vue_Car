@@ -5,7 +5,7 @@
         <el-tab-pane label="系统消息" name="first">
           <el-table height="450px"
                     stripe
-                    :data="page.records.filter(data => !search || data.messageTitle.toLowerCase().includes(search.toLowerCase()))"
+                    :data="page.records.filter(data => !search || data.messageText.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
             <el-table-column
               width="120px"
@@ -18,12 +18,14 @@
               prop="messageText">
             </el-table-column>
             <el-table-column
-              width="120px"
               label="发送人"
-              prop="userName">
+              width="120px">
+            <template slot-scope="scope">
+              <router-link :to="{name: 'ckyh',query: {userId: scope.row.thatId}}">{{scope.row.userName}}</router-link>
+            </template>
             </el-table-column>
             <el-table-column
-              width="260px"
+              width="200px"
               label="通知时间"
               prop="createTime">
             </el-table-column>
@@ -60,7 +62,7 @@
         <el-tab-pane label="动态消息" name="second">
           <el-table height="450px"
                     stripe
-                    :data="page2.records.filter(data => !search || data.messageTitle.toLowerCase().includes(search.toLowerCase()))"
+                    :data="page2.records.filter(data => !search || data.messageText.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
             <el-table-column
               width="120px"
@@ -69,8 +71,10 @@
             </el-table-column>
             <el-table-column
               width="110px"
-              label="相关人"
-              prop="user.userName">
+              label="相关人">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'ckyh',query: {userId: scope.row.userId}}">{{scope.row.user.userName}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="210px"
@@ -79,8 +83,10 @@
             </el-table-column>
             <el-table-column
               width="120px"
-              label="发送人"
-              prop="userName">
+              label="发送人">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'ckyh',query: {userId: scope.row.thatId}}">{{scope.row.userName}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="160px"
@@ -88,8 +94,10 @@
               prop="createTime">
             </el-table-column>
             <el-table-column
-              label="相关动态"
-              prop="essayTitle">
+              label="相关动态">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'dtxq',query: {essayId: scope.row.essayId}}">{{scope.row.essayTitle}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="150px"
@@ -125,7 +133,7 @@
         <el-tab-pane label="评论消息" name="xr">
           <el-table height="450px"
                     stripe
-                    :data="page4.records.filter(data => !search || data.messageTitle.toLowerCase().includes(search.toLowerCase()))"
+                    :data="page4.records.filter(data => !search || data.messageText.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
             <el-table-column
               width="120px"
@@ -134,8 +142,10 @@
             </el-table-column>
             <el-table-column
               width="110px"
-              label="点赞用户"
-              prop="user.userName">
+              label="点赞用户">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'ckyh',query: {userId: scope.row.userId}}">{{scope.row.user.userName}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="210px"
@@ -144,8 +154,10 @@
             </el-table-column>
             <el-table-column
               width="120px"
-              label="发送人"
-              prop="userName">
+              label="发送人">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'ckyh',query: {userId: scope.row.thatId}}">{{scope.row.userName}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="160px"
@@ -153,8 +165,10 @@
               prop="createTime">
             </el-table-column>
             <el-table-column
-              label="相关评论"
-              prop="commentText">
+              label="相关评论">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'dtxq',query: {essayId: scope.row.essayId2}}">{{scope.row.commentText}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="150px"
@@ -190,7 +204,7 @@
         <el-tab-pane label="私信" name="third">
           <el-table height="450px"
                     stripe
-                    :data="page3.records.filter(data => !search || data.messageTitle.toLowerCase().includes(search.toLowerCase()))"
+                    :data="page3.records.filter(data => !search || data.messageText.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
             <el-table-column
               width="120px"
@@ -204,8 +218,10 @@
             </el-table-column>
             <el-table-column
               width="120px"
-              label="发送人"
-              prop="userName">
+              label="发送人">
+              <template slot-scope="scope">
+                <router-link :to="{name: 'ckyh',query: {userId: scope.row.thatId}}">{{scope.row.userName}}</router-link>
+              </template>
             </el-table-column>
             <el-table-column
               width="260px"
@@ -404,4 +420,12 @@ export default {
 </script>
 
 <style scoped>
+  a:hover {
+    color: red;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bolder;
+  }
 </style>

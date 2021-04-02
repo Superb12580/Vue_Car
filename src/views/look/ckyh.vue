@@ -1,12 +1,19 @@
 <template>
   <div>
     <Header></Header>
-    <div style="margin-left: 150px">
-      <div style="margin: 80px 450px 30px 450px">
+    <div style="margin-left: 180px;margin-top: 25px">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
+        <el-breadcrumb-item><span style="color: #409EFF"> {{user.userName}} </span>的个人中心</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div style="margin: 50px 420px 30px 420px">
         <img style="width: 80px;height: 80px" v-if="user.photo" :src="user.photo">
         <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
-        <el-button style="margin-left: 50px" v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" plain round size="mini">关注</el-button>
-        <el-button style="margin-left: 50px" v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
+        <div style="margin-left: 100px">
+        <el-button v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" round size="mini">关注</el-button>
+        <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
+        <el-button style="margin-left: 20px" type="info" round size="mini" icon="el-icon-phone-outline" plain @click="sx('ruleForm')">私信</el-button>
+        </div>
       </div>
       <div style="margin-left: 210px">
       <el-badge :value="user.attentionCount" :max="10" class="item">
@@ -46,6 +53,21 @@
         <el-col :span="6" ><div class="grid-content bg-purple"><h4>{{user.sign}}</h4></div></el-col>
       </el-row>
     </div>
+<!--    私信-->
+    <el-dialog title="发私信" :visible.sync="dialogFormVisible" style="width: 1000px;margin: 0 auto">
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px">
+        <el-form-item label="标题" prop="messageTitle">
+          <el-input style="width: 300px" v-model="ruleForm.messageTitle" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="私信内容" prop="messageText">
+          <el-input style="width: 300px" type="textarea" v-model="ruleForm.messageText" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" style="margin-right: 150px;margin-bottom: 30px">
+        <el-button type="primary" @click="send('ruleForm')">发送</el-button>
+        <el-button @click="resetForm('ruleForm')">清空</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <!--个人资料-->
@@ -56,6 +78,18 @@ export default {
   name: 'ckyh',
   data () {
     return {
+      // 私信弹窗
+      dialogFormVisible: false,
+      // 私信
+      ruleForm: {
+        thisId: '',
+        thatId: '',
+        messageTitle: '',
+        messageText: ''
+      },
+      rules: {
+        messageText: { required: true, message: '请输入私信内容', trigger: 'blur' }
+      },
       user: {
         userId: '',
         userName: '张三',
@@ -109,6 +143,45 @@ export default {
         that.msg(rest.data.msg)
       }, function (error) {
         console.log(error)
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    sx (formName) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      this.resetForm(formName)
+      this.dialogFormVisible = true
+    },
+    // 私信
+    send (formName) {
+      const thatId = this.$route.query.userId
+      const user = this.$store.getters.GET_USER
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const that = this
+          that.ruleForm.thisId = thatId
+          that.ruleForm.thatId = user.userId
+          this.$http.post('/message/add', that.ruleForm).then(function (rest) {
+            const data = rest.data
+            that.msg(data.msg)
+            if (data.code === 200) {
+              that.dialogFormVisible = false
+            }
+            that.resetForm('ruleForm')
+          }, function (error) {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
     },
     // 提示

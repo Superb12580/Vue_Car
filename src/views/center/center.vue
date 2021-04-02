@@ -65,7 +65,7 @@ export default {
   /* display: inline-block; */
   float: left;
   width: 200px;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 .main-col{
   display: inline-block;

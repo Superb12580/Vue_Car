@@ -32,7 +32,7 @@
                 <el-button size="small" @click="agree(record.essayId)">点赞</el-button>
               </el-badge>
               <el-badge :value="record.commentCount" class="item" type="warning">
-                <el-button size="small">评论</el-button>
+                <el-button size="small" @click="comment(record.essayId)">评论</el-button>
               </el-badge>
             </el-card>
           </el-timeline-item>
@@ -75,7 +75,7 @@
                   <el-button size="small" @click="agree(record.essay.essayId)">点赞</el-button>
                 </el-badge>
                 <el-badge :value="record.essay.commentCount" class="item" type="warning">
-                  <el-button size="small">评论</el-button>
+                  <el-button size="small" @click="comment(record.essay.essayId)">评论</el-button>
                 </el-badge>
               </el-card>
               <el-card v-else>原文已删除</el-card>
@@ -162,6 +162,36 @@ export default {
         that.pageForward = rest.data.data
       }, function (error) {
         console.log(error)
+      })
+    },
+    // 评论
+    comment (essayId) {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      this.$prompt('说说你的看法...', '评论', {
+        confirmButtonText: '评论',
+        cancelButtonText: '取消',
+        inputPattern: /[^]/,
+        inputErrorMessage: '说点什么吧...'
+      }).then(({ value }) => {
+        const that = this
+        this.$http.post('/comment/add', { userId: user.userId, essayId: essayId, commentText: value }).then(rest => {
+          that.reload()
+        })
+        this.$message({
+          type: 'success',
+          message: '已评论 ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消评论'
+        })
       })
     },
     // 转发

@@ -60,6 +60,9 @@
             if (login.code === 200) {
               that.$store.commit('SET_USER', login.data)
               that.$router.push('/')
+              if (login.data.sxts > 0) {
+                that.msg2(login.data.sxts)
+              }
             }
             that.resetForm('ruleForm')
           }, function (error) {
@@ -80,6 +83,14 @@
       this.$message({
         showClose: true,
         message: data,
+        type: 'success'
+      })
+    },
+    msg2 (data) {
+      this.$notify({
+        title: '提醒',
+        message: '新收到 ' + data + ' 条私信消息',
+        offset: 145,
         type: 'success'
       })
     },
