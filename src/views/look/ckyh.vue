@@ -6,13 +6,13 @@
         <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
         <el-breadcrumb-item><span style="color: #409EFF"> {{user.userName}} </span>的个人中心</el-breadcrumb-item>
       </el-breadcrumb>
-      <div style="margin: 50px 420px 30px 420px">
+      <div style="margin: 50px 0 30px 420px">
         <img style="width: 80px;height: 80px" v-if="user.photo" :src="user.photo">
         <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
-        <div style="margin-left: 100px">
-        <el-button v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" round size="mini">关注</el-button>
-        <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
-        <el-button style="margin-left: 20px" type="info" round size="mini" icon="el-icon-phone-outline" plain @click="sx('ruleForm')">私信</el-button>
+        <div style="margin-left: 100px" v-show="!flag">
+          <el-button style="margin-right: 20px" type="info" round size="mini" icon="el-icon-phone-outline" plain @click="sx">私信</el-button>
+          <el-button v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" round size="mini">关注</el-button>
+          <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
         </div>
       </div>
       <div style="margin-left: 210px">
@@ -78,6 +78,8 @@ export default {
   name: 'ckyh',
   data () {
     return {
+      // 是否为本人
+      flag: false,
       // 私信弹窗
       dialogFormVisible: false,
       // 私信
@@ -148,7 +150,7 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
-    sx (formName) {
+    sx () {
       const user = this.$store.getters.GET_USER
       // 判断是否已登录
       if (!user) {
@@ -156,8 +158,8 @@ export default {
         this.$router.push('/login')
         return false
       }
-      this.resetForm(formName)
       this.dialogFormVisible = true
+      this.resetForm('ruleForm')
     },
     // 私信
     send (formName) {
@@ -201,9 +203,8 @@ export default {
       userId = user.userId
     }
     // 如果是本人
-    if (thatId === userId) {
-      this.$router.push('/grzl')
-      return false
+    if (thatId == userId) {
+      this.flag = true
     }
     const that = this
     this.$http.get('/user/item?userId=' + userId + '&thatId=' + thatId).then(function (rest) {
