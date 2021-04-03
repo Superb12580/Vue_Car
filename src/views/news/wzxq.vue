@@ -95,9 +95,9 @@
       <div class="text">{{news.text6}}</div>
       <img class="imgs" v-if="news.photo[5]" :src="news.photo[5].photoUrl">
       <div class="text">{{news.text7}}</div>
-      <el-col style="margin-left: 50px;margin-top: 20px" :span="6" v-for="photo in news.photo" :key="photo" :offset="1">
+      <el-col style="margin-left: 50px;margin-top: 20px;margin-bottom: 20px" :span="6" v-for="(photo,index) in news.photo" :key="index" :offset="1">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
-      <el-image :src="photo.photoUrl">
+      <el-image style="width: 218px;height: 144px" :src="photo.photoUrl">
         <div slot="placeholder" class="image-slot">
           加载中<span class="dot">...</span>
         </div>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header></Header>
-    <el-button @click="save">保存</el-button>
     <div><!--:data="this.fForm"-->
       <el-upload
         action="http://localhost:8081/car/oss/file"
