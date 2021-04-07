@@ -208,12 +208,12 @@
                     style="width: 100%">
             <el-table-column
               width="120px"
-              label="消息标题"
+              label="私信标题"
               prop="messageTitle">
             </el-table-column>
             <el-table-column
               width="250px"
-              label="消息详情"
+              label="私信详情"
               prop="messageText">
             </el-table-column>
             <el-table-column

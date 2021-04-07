@@ -2,10 +2,10 @@
   <div>
     <Header></Header>
     <div style="margin-top: 10px;">
-      <router-link :to="{ path: '/fbwz'}"><el-button v-if="user.sfrz === 1" type="text" style="float: right;margin-right: 450px">发布文章</el-button></router-link>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>新闻列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/wzlb' }">新闻列表</el-breadcrumb-item>
+        <el-breadcrumb-item>发布文章</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div style="margin: 15px auto">
@@ -95,41 +95,35 @@
         </div>
     </div>
     <div style="width: 1px;height: 1360px;background-color: #ff6700;float: right;margin-right: 20px"></div>
-    <div v-if="page.total !== 0" class="left2">
-      <!--一条新闻-->
-      <div class="ytxw" v-for="news in page.records">
-        <!--新闻右侧-->
-        <div class="xwyc">
-          <router-link :to="{name: 'wzxq',query: {id: news.id}}"><h3 style="height: 60px">{{news.title}}</h3></router-link>
-          <router-link :to="{name: 'ckyh',query: {userId: news.user.userId}}"><h4 style="float: left">{{news.user.userName}}</h4></router-link>
-          <div style="margin-top: 25px;float: left">
-          <i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /></i>
-          <span style="font-size: 14px;margin-left: 20px">{{news.createTime}}</span>
-          </div>
-          <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{news.count}}</h5>
+      <div class="left2">
+        <div style="margin-bottom: 50px">
+        <el-steps :active="2" simple style="margin-top: 20px">
+          <el-step icon="el-icon-edit" title="编辑文章 1" ></el-step>
+          <el-step icon="el-icon-upload" title="上传图集 2" ></el-step>
+          <el-step title="待审核 3" ></el-step>
+          <el-step icon="el-icon-check" title="审核结果 4" ></el-step>
+        </el-steps>
         </div>
-        <!--新闻图-->
-        <div class="xwt">
-          <router-link :to="{name: 'wzxq',query: {id: news.id}}">
-            <img style="width: 100%;height: 100%" v-if="news.newsPhoto" :src="news.newsPhoto">
-            <img style="width: 100%;height: 100%" v-else src="../../assets/carWzzs/0.jpg">
-          </router-link>
+        <div>
+          <el-form label-width="100px">
+            <el-form-item label="上传图集">
+          <el-upload
+            class="upload-demo"
+            action="http://localhost:8081/car/news/uploadNewsTJ"
+            :file-list="fileList"
+            :data="this.news"
+            list-type="picture">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="cli">下一步</el-button>
+              <el-button type="text" @click="cli">跳过</el-button>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
-      <div style="float: left;margin: 30px 0 30px 50px">
-        <el-pagination
-          background="true"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="page.current"
-          :page-sizes="[5, 8, 10, 15]"
-          :page-size="page.size"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="page.total">
-        </el-pagination>
-      </div>
-    </div>
-      <div style="padding: 200px 350px" v-else><h2 style="color: red">暂无数据</h2></div>
     </div>
   </div>
 </template>
@@ -137,59 +131,53 @@
 <script>
 import Header from '../../components/header'
 export default {
-  name: 'wzlb',
+  name: 'fbwz2',
+  // 页面刷新
+  inject: ['reload'],
   components: { Header },
   data () {
     return {
-      page: {
-        records: [],
-        current: 1,
-        total: 0,
-        size: 5
-      },
       // 右侧热门品牌
       rmpp: [],
       // 文章排行
       wzPh: [],
-      user: {
-        sfrz: 0
-      }
+      // 第二步
+      news: {
+        id: '',
+        title: '',
+        userId: ''
+      },
+      fileList: []
     }
   },
   methods: {
-    handleSizeChange (val) {
+    // 图集上传完成
+    cli () {
       const that = this
-      this.$http.get('/news/list?size=' + val).then(function (rest) {
-        that.page = rest.data.data
+      this.$http.post('/news/tjwc', that.news).then(function (rest) {
+        that.$router.push({ path: '/fbwz3', query: { id: rest.data.data.id } })
       }, function (error) {
         console.log(error)
       })
     },
-    handleCurrentChange (val) {
-      const that = this
-      this.$http.get('/news/list?size=' + that.page.size + '&current=' + val).then(function (rest) {
-        that.page = rest.data.data
-      }, function (error) {
-        console.log(error)
+    open () {
+      this.$notify({
+        title: '提示',
+        message: '图集上传完成，等待管理员审核',
+        offset: 145,
+        type: 'success'
       })
     }
   },
   created () {
-    // 是否认证
-    const user = this.$store.getters.GET_USER
-    if (user) {
-      this.user.sfrz = user.sfrz
-    }
+    // 初始化
+    this.news.id = this.$route.query.id
+    this.news.title = this.$route.query.title
+    this.news.userId = this.$route.query.userId
     const that = this
-    // 所有news
-    this.$http.get('/news/list').then(function (rest) {
-      that.page = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    // 热门品牌初始化
     this.$http.get('/style/itemDjl').then(function (rest) {
       that.rmpp = rest.data.data
+      that.options = rest.data.data
     }, function (error) {
       console.log(error)
     })
@@ -204,6 +192,40 @@ export default {
 </script>
 
 <style scoped>
+  input[type="file"] {
+    display: none;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #ff6700;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader {
+    border: 1px dashed #ddd;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
   .footer {
     float: right;
     width: 340px;
@@ -242,29 +264,11 @@ export default {
   .left2 {
     width: 850px;
     float: left;
-  }
-  .ytxw {
-    width: 810px;
-    height: 200px;
-    margin: 10px 20px;
-    border: 1px solid #ccc;
-    float: left;
+    margin-top: 30px;
   }
   .vip img{
     margin: 0 3px;
     width: 40px;
-  }
-  .xwt {
-    width: 220px;
-    height: 160px;
-    float: left;
-    margin: 20px;
-  }
-  .xwyc {
-    width: 530px;
-    height: 160px;
-    margin: 20px 20px 20px 0;
-    float: right;
   }
   .rmcx {
     width: 360px;

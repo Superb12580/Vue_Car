@@ -19,7 +19,6 @@ export default new Vuex.Store({
       state.user = user
       sessionStorage.setItem('user', JSON.stringify(user))
     },
-
     REMOVE_USER: (state) => {
       // state.token = ''
       // state.userInfo = {}

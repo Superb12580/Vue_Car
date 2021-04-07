@@ -32,7 +32,7 @@
         </div>
         <div class="call">
           <div class="left">
-            <img style="width: 60px;height: 60px" v-if="user.userId === 0" src="src/assets/static/搬砖.jpg" alt="logo" />
+            <img style="width: 60px;height: 60px" v-if="user.userId === 0" src="../../assets/static/搬砖.jpg" alt="logo" />
             <img style="width: 60px;height: 60px" v-else-if="user.photo" :src="user.photo">
             <el-avatar v-else :size="60"> {{user.userName}} </el-avatar>
           </div>

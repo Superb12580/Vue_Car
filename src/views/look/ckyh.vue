@@ -6,16 +6,20 @@
         <el-breadcrumb-item :to="{ path: '/cyq' }">车友圈</el-breadcrumb-item>
         <el-breadcrumb-item><span style="color: #409EFF"> {{user.userName}} </span>的个人中心</el-breadcrumb-item>
       </el-breadcrumb>
-      <div style="margin: 50px 0 30px 420px">
+      <div style="margin: 40px 0 30px 420px">
         <img style="width: 80px;height: 80px" v-if="user.photo" :src="user.photo">
         <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
+        <div v-if="user.sfrz === 1" style="margin-top: 15px"><img style="width: 20px" src="../../assets/static/vip.png"><span style="margin-left: 10px;font-size: 10px;color: #ff6700">车家号认证</span></div>
         <div style="margin-left: 100px" v-show="!flag">
           <el-button style="margin-right: 20px" type="info" round size="mini" icon="el-icon-phone-outline" plain @click="sx">私信</el-button>
           <el-button v-if="user.flagAttention === 0" icon="el-icon-plus" @click="attention" type="primary" round size="mini">关注</el-button>
           <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
         </div>
       </div>
-      <div style="margin-left: 210px">
+      <div style="margin-left: 160px">
+        <el-badge :value="user.newsCount" :max="10" class="item">
+          <el-button size="small" @click="toWz(user.userId)">Ta的文章</el-button>
+        </el-badge>
       <el-badge :value="user.attentionCount" :max="10" class="item">
         <el-button size="small" @click="toAttention(user.userId, user.userName)">Ta的关注</el-button>
       </el-badge>
@@ -114,6 +118,9 @@ export default {
     }
   },
   methods: {
+    toWz (userId) {
+      this.$router.push({ path: '/ckwz', query: { userId: userId } })
+    },
     toAttention (userId, userName) {
       this.$router.push({ path: '/ckgz', query: { userId: userId, userName: userName } })
     },

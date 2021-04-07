@@ -46,6 +46,24 @@ const routes = [
     name: 'wzlb',
     component: () => import('../views/news/wzlb')
   },
+  // 发布文章
+  {
+    path: '/fbwz',
+    name: 'fbwz',
+    component: () => import('../views/news/fbwz')
+  },
+  // 发布文章
+  {
+    path: '/fbwz2',
+    name: 'fbwz2',
+    component: () => import('../views/news/fbwz2')
+  },
+  // 发布文章
+  {
+    path: '/fbwz3',
+    name: 'fbwz3',
+    component: () => import('../views/news/fbwz3')
+  },
   // 发表动态
   {
     path: '/fbdt',
@@ -88,6 +106,12 @@ const routes = [
     name: 'ckfs',
     component: () => import('../views/look/ckfs')
   },
+  // 查看文章
+  {
+    path: '/ckwz',
+    name: 'ckwz',
+    component: () => import('../views/look/ckwz')
+  },
   // 查看关注
   {
     path: '/ckgz',
@@ -105,6 +129,12 @@ const routes = [
         path: '/grzl',
         name: 'grzl',
         component: () => import('../views/center/grzl')
+      },
+      // 我的文章
+      {
+        path: '/wdwz',
+        name: 'wdwz',
+        component: () => import('../views/center/wdwz')
       },
       // 我的动态
       {

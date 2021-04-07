@@ -13,6 +13,10 @@
             <i class="el-icon-tickets"></i>
             <span slot="title">个人资料</span>
           </el-menu-item>
+          <el-menu-item index="/wdwz" v-if="this.$store.getters.GET_USER.sfrz === 1">
+            <i class="el-icon-news"></i>
+            <span slot="title">我的文章</span>
+          </el-menu-item>
           <el-menu-item index="/wddt">
             <i class="el-icon-news"></i>
             <span slot="title">我的动态</span>
@@ -53,7 +57,15 @@
 import Header from '../../components/header'
 export default {
   components: { Header },
-  name: 'center'
+  name: 'center',
+  created () {
+    const that = this
+    this.$http.get('/user/user?userId=' + that.$store.getters.GET_USER.userId).then(function (rest) {
+      that.user = rest.data.data
+    }, function (error) {
+      console.log(error)
+    })
+  }
 }
 </script>
 <style scoped>

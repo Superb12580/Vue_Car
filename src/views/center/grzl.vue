@@ -2,6 +2,7 @@
   <div>
     <div style="margin-left: 150px">
       <div style="margin-bottom: 50px;margin-left: 270px">
+        <div v-if="user.sfrz === 1" style="float: right;margin-right: 380px;margin-top: 130px"><img style="width: 20px" src="../../assets/static/vip.png"><span style="margin-left: 10px;font-size: 10px;color: #ff6700">车家号认证</span></div>
         <el-upload
           action="http://localhost:8081/car/user/upload"
           :data="this.user"
@@ -146,7 +147,8 @@ export default {
         collectionCount: 35,
         attentionCount: 35,
         fansCount: 35,
-        messageCount: 35
+        messageCount: 35,
+        sfrz: 0
       },
       dialogFormVisible: false,
       dialogZlVisible: false,

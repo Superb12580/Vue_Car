@@ -2,10 +2,10 @@
   <div>
     <Header></Header>
     <div style="margin-top: 10px;">
-      <router-link :to="{ path: '/fbwz'}"><el-button v-if="user.sfrz === 1" type="text" style="float: right;margin-right: 450px">发布文章</el-button></router-link>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>新闻列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/ckyh', query: { userId: page.records[0].user.userId }}"><span style="color: #409EFF"> {{page.records[0].user.userName}} </span>的个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item>Ta 的文章列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div style="margin: 15px auto">
@@ -137,7 +137,7 @@
 <script>
 import Header from '../../components/header'
 export default {
-  name: 'wzlb',
+  name: 'ckwz',
   components: { Header },
   data () {
     return {
@@ -159,7 +159,7 @@ export default {
   methods: {
     handleSizeChange (val) {
       const that = this
-      this.$http.get('/news/list?size=' + val).then(function (rest) {
+      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -167,7 +167,7 @@ export default {
     },
     handleCurrentChange (val) {
       const that = this
-      this.$http.get('/news/list?size=' + that.page.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -175,19 +175,14 @@ export default {
     }
   },
   created () {
-    // 是否认证
-    const user = this.$store.getters.GET_USER
-    if (user) {
-      this.user.sfrz = user.sfrz
-    }
     const that = this
-    // 所有news
-    this.$http.get('/news/list').then(function (rest) {
+    const thatId = this.$route.query.userId
+    // 个人
+    this.$http.get('/news/item?userId=' + thatId).then(function (rest) {
       that.page = rest.data.data
     }, function (error) {
       console.log(error)
     })
-    // 热门品牌初始化
     this.$http.get('/style/itemDjl').then(function (rest) {
       that.rmpp = rest.data.data
     }, function (error) {

@@ -21,7 +21,7 @@
           <router-link :to="{name: 'ckyh',query: {userId: news.user.userId}}"><h5 style="text-align: center">{{news.user.userName}}</h5></router-link>
           <div style="padding: 14px;margin-left: 30px">
             <el-badge :value="news.newsCount" :max="10" type="primary">
-              <router-link :to="{name: 'wzlb',query: {userId: news.user.userId}}"><el-button size="small">文章数</el-button></router-link>
+              <router-link :to="{name: 'ckwz',query: {userId: news.user.userId}}"><el-button size="small">文章数</el-button></router-link>
             </el-badge>
             <el-badge style="margin-left: 50px" :value="news.fansCount" :max="10">
               <router-link :to="{name: 'ckfs',query: {userId: news.user.userId, userName: news.user.userName}}"><el-button size="small">粉丝数</el-button></router-link>
