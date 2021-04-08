@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div style="margin: 15px auto">
-    <div v-if="page.total !== 0" class="left2">
+    <router-link :to="{ path: '/fbwz'}"><el-button v-if="this.$store.getters.GET_USER.sfrz === 1" type="text" style="float: right;margin-right: 110px">发布文章</el-button></router-link>
+    <div>
+      <div v-if="page.total !== 0" class="left2">
       <!--一条新闻-->
       <div class="ytxw" v-for="news in page.records">
         <!--新闻右侧-->
@@ -13,10 +14,12 @@
           <span style="font-size: 14px;margin-left: 20px">{{news.createTime}}</span>
           </div>
           <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{news.count}}</h5>
-          <router-link :to="{name: 'fbwz2',query: { id: news.id, title: news.title, userId: news.userId }}"><span v-if="news.zt === 2">待上传图集</span></router-link>
-          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 3">待审核</span></router-link>
-          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 4">已发布</span></router-link>
-          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 5">已驳回</span></router-link>
+          <div style="margin-left: 350px">
+          <router-link :to="{name: 'fbwz2',query: { id: news.id, title: news.title, userId: news.userId }}"><span v-if="news.zt === 2"><img style="width: 100px" src="../../assets/static/dsctj.jpg"></span></router-link>
+          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 3"><img style="width: 100px" src="../../assets/static/dsh.jpg"></span></router-link>
+          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 4"><img style="width: 100px" src="../../assets/static/yfb.jpg"></span></router-link>
+          <router-link :to="{name: 'fbwz3',query: {id: news.id}}"><span v-if="news.zt === 5"><img style="width: 100px" src="../../assets/static/ybh.jpg"></span></router-link>
+          </div>
         </div>
         <!--新闻图-->
         <div class="xwt">
@@ -93,10 +96,10 @@ export default {
   .left2 {
     width: 850px;
     float: left;
-    margin-left: 100px;
+    margin-top: 20px;
   }
   .ytxw {
-    width: 810px;
+    width: 1000px;
     height: 200px;
     margin: 10px 20px;
     border: 1px solid #ccc;
@@ -113,7 +116,7 @@ export default {
     margin: 20px;
   }
   .xwyc {
-    width: 530px;
+    width: 680px;
     height: 160px;
     margin: 20px 20px 20px 0;
     float: right;

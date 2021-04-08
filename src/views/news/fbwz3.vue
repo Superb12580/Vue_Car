@@ -108,7 +108,7 @@
           <h2 style="color: red">等待管理员审核...</h2>
           <router-link :to="{name: 'wzlb'}" style="margin-left: 40px;color: #409EFF">返回News列表</router-link>
         </div>
-        <div v-if="this.news.zt === 4">
+        <div v-else-if="this.news.zt === 4">
           <h2 style="color: red;margin-left: 380px">审核通过</h2>
           <div class="ytxw">
           <div class="xwyc">
@@ -129,7 +129,7 @@
           </div>
           </div>
         </div>
-        <div v-if="this.news.zt === 5" style="margin: 200px 300px">
+        <div v-else-if="this.news.zt === 5" style="margin: 200px 300px">
           <h2 style="color: red">审核未通过，已驳回</h2>
           <router-link :to="{name: 'wzlb'}" style="margin-left: 50px;color: #409EFF">返回News列表</router-link>
         </div>

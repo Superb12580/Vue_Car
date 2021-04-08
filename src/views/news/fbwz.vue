@@ -107,7 +107,7 @@
         <div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
           <el-form-item label="文章标题" prop="title">
-            <el-input v-model="ruleForm.title" placeholder="请输入标题" style="width: 300px"></el-input>
+            <el-input v-model="ruleForm.title" placeholder="请输入标题，建议25字上下..." style="width: 300px"></el-input>
           </el-form-item>
           <el-form-item label="关联车型">
             <el-select style="width: 300px" v-model="ruleForm.styleId" placeholder="请选择">
