@@ -115,29 +115,29 @@
             <template slot="title">
               {{imgZb.title1}}<i class="header-icon el-icon-success"></i>
             </template>
-            <div>{{imgZb.a_text1}}</div>
-            <div>{{imgZb.a_text2}}</div>
+            <div>{{imgZb.text1}}</div>
+            <div>{{imgZb.text2}}</div>
           </el-collapse-item>
           <el-collapse-item name="1">
             <template slot="title">
               {{imgZb.title2}}<i class="header-icon el-icon-s-flag"></i>
             </template>
-            <div>{{imgZb.b_text1}}</div>
-            <div>{{imgZb.b_text2}}</div>
+            <div>{{imgZb.text3}}</div>
+            <div>{{imgZb.text4}}</div>
           </el-collapse-item>
           <el-collapse-item>
             <template slot="title">
               {{imgZb.title3}}<i class="header-icon el-icon-menu"></i>
             </template>
-            <div>{{imgZb.c_text1}}</div>
-            <div>{{imgZb.c_text2}}</div>
+            <div>{{imgZb.text5}}</div>
+            <div>{{imgZb.text6}}</div>
           </el-collapse-item>
           <el-collapse-item>
             <template slot="title">
               {{imgZb.title4}}<i class="header-icon el-icon-info"></i>
             </template>
-            <div>{{imgZb.d_text1}}</div>
-            <div>{{imgZb.d_text2}}</div>
+            <div>{{imgZb.text7}}</div>
+            <div>{{imgZb.text8}}</div>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -297,17 +297,17 @@ export default {
         style_photo: '',
         style_id: 1,
         title1: '一致性 Consistency',
-        a_text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
-        a_text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
+        text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
+        text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
         title2: '一致性 Consistency',
-        b_text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
-        b_text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
+        text3: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
+        text4: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
         title3: '一致性 Consistency',
-        c_text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
-        c_text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
+        text5: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
+        text6: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。',
         title4: '一致性 Consistency',
-        d_text1: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
-        d_text2: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。'
+        text7: '与现实生活一致：与现实生活保持一致，遵循用户习惯的语言和概念；',
+        text8: '在界面中一致：比如：设计样式、图标和文本、元素的位置等。'
       },
       // 底部轮播
       imgDb: []

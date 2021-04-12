@@ -120,7 +120,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="上传封面" ref="uploadElement" prop="newsPhoto">
-            <el-input v-model="ruleForm.newsPhoto" v-if="false"></el-input>
+<!--            <el-input v-model="ruleForm.newsPhoto" v-if="false"></el-input>-->
             <el-upload
               class="avatar-uploader"
               ref="upload"

@@ -7,12 +7,13 @@
         <el-breadcrumb-item>车友圈</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div v-if="page.total !== 0">
+    <div>
     <div style="margin: 0 0 20px 1200px">
       <el-button type="primary" icon="el-icon-plus" round @click="to">发表</el-button>
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="原创" name="first">
+        <div v-if="page.total !== 0">
         <div>
         <el-timeline>
           <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
@@ -51,8 +52,11 @@
             :total="page.total">
           </el-pagination>
         </div>
+        </div>
+        <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
       <el-tab-pane label="转发" name="second">
+        <div v-if="pageForward.total !== 0">
         <div>
           <el-timeline>
             <el-timeline-item v-for='(record,index) in pageForward.records' :key="index" placement="top">
@@ -95,10 +99,11 @@
             :total="pageForward.total">
           </el-pagination>
         </div>
+        </div>
+        <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
     </el-tabs>
     </div>
-    <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
   </div>
 </template>
 <!--我的动态-->

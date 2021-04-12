@@ -17,7 +17,7 @@
         </div>
       </div>
       <div style="margin-left: 160px">
-        <el-badge :value="user.newsCount" :max="10" class="item">
+        <el-badge v-if="user.sfrz === 1" :value="user.newsCount" :max="10" class="item">
           <el-button size="small" @click="toWz(user.userId)">Ta的文章</el-button>
         </el-badge>
       <el-badge :value="user.attentionCount" :max="10" class="item">
