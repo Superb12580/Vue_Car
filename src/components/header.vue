@@ -81,10 +81,6 @@ export default {
 </script>
 
 <style scoped>
-  .aside-col {
-    float: left;
-    width: 200px;
-  }
 
   .home {
     /*background-color: #eee;*/

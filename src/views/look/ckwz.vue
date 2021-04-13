@@ -4,7 +4,7 @@
     <div style="margin-top: 10px;">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/ckyh', query: { userId: page.records[0].user.userId }}"><span style="color: #409EFF"> {{page.records[0].user.userName}} </span>的个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/ckyh', query: { userId: this.userId }}"><span style="color: #409EFF"> {{this.userName}} </span>的个人中心</el-breadcrumb-item>
         <el-breadcrumb-item>Ta 的文章列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -151,9 +151,10 @@ export default {
       rmpp: [],
       // 文章排行
       wzPh: [],
-      user: {
-        sfrz: 0
-      }
+      // 用户Id
+      userId: '',
+      // 用户名称
+      userName: '张三'
     }
   },
   methods: {
@@ -177,6 +178,8 @@ export default {
   created () {
     const that = this
     const thatId = this.$route.query.userId
+    this.userId = thatId
+    this.userName = this.$route.query.userName
     // 个人
     this.$http.get('/news/item?userId=' + thatId).then(function (rest) {
       that.page = rest.data.data

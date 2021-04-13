@@ -89,7 +89,7 @@
     msg2 (data) {
       this.$notify({
         title: '提醒',
-        message: '新收到 ' + data + ' 条私信消息',
+        message: '新收到 ' + data + ' 条消息',
         offset: 145,
         type: 'success'
       })
