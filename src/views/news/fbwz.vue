@@ -109,6 +109,22 @@
           <el-form-item label="文章标题" prop="title">
             <el-input v-model="ruleForm.title" placeholder="请输入标题，建议25字上下..." style="width: 300px"></el-input>
           </el-form-item>
+          <div style="margin: 15px 30px">
+          <el-switch
+            style="display: block"
+            v-model="flag"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="上市新闻"
+            inactive-text="普通新闻">
+          </el-switch>
+          </div>
+          <el-form-item v-if="flag" label="上市车名称">
+            <el-input v-model="ruleForm.sscmc" placeholder="上市车名称" style="width: 300px"></el-input>
+          </el-form-item>
+          <el-form-item v-if="flag" label="上市时间">
+            <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy年MM月dd日" placeholder="选择日期" v-model="ruleForm.sssj" style="width: 300px"></el-date-picker>
+          </el-form-item>
           <el-form-item label="关联车型">
             <el-select style="width: 300px" v-model="ruleForm.styleId" placeholder="请选择">
               <el-option
@@ -180,9 +196,13 @@ export default {
       rmpp: [],
       // 文章排行
       wzPh: [],
+      // 是否上市新闻
+      flag: false,
       // 第一步
       ruleForm: {
         title: '',
+        sscmc: '',
+        sssj: '',
         newsPhoto: '',
         text1: '',
         text2: '',

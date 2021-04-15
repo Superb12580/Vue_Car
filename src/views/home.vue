@@ -173,7 +173,7 @@
         <router-link style="float: right;font-size: 16px" :to="{name: 'wzlb'}">更多 ></router-link>
         <ul style="padding-top: 10px">
           <li v-for="(item,index) in wzTj">
-            <router-link v-if="index === 6 || index === 7" style="font-size: 16px;color: #ff6700" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
+            <router-link v-if="index === 6 || index === 7" style="font-size: 16px;color: red" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
             <router-link v-else style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}">{{item.title}}</router-link>
           </li>
         </ul>
