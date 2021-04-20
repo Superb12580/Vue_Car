@@ -87,10 +87,8 @@
         <el-input style="width: 300px" v-model="zlForm.userName"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="gender">
-        <el-radio-group v-model="zlForm.gender">
-          <el-radio label="男"></el-radio>
-          <el-radio label="女"></el-radio>
-        </el-radio-group>
+          <el-radio v-model="zlForm.gender" :label="1">男</el-radio>
+          <el-radio v-model="zlForm.gender" :label="0">女</el-radio>
       </el-form-item>
       <el-form-item label="出生日期" prop="dateBirth">
         <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="zlForm.dateBirth" style="width: 300px"></el-date-picker>
@@ -216,7 +214,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const that = this
-          that.zlForm.gender = that.zlForm.gender === '男' ? 1 : 0
           this.$http.post('/user/put', that.zlForm).then(function (rest) {
             const data = rest.data
             that.msg(data.msg)
@@ -280,7 +277,7 @@ export default {
       that.zlForm.userId = rest.data.data.userId
       that.zlForm.userName = rest.data.data.userName
       that.zlForm.dateBirth = rest.data.data.dateBirth
-      that.zlForm.gender = rest.data.data.gender === 1 ? '男' : '女'
+      that.zlForm.gender = rest.data.data.gender
       that.zlForm.sign = rest.data.data.sign
     }, function (error) {
       console.log(error)
