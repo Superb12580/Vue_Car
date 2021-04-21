@@ -3,14 +3,14 @@
   <Header></Header>
 <!--    车类别开始-->
     <div class="box2" style="margin: 30px auto">
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
-      <router-link class="item2" :to="{name: '',query: {jb: 1}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 56}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 57}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 58}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 59}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 60}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 61}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 62}}"></router-link>
+      <router-link class="item2" :to="{name: 'xc',params: {jb: 63}}"></router-link>
     </div>
 <!--    车类别结束-->
 <!--    头部轮播图开始-->
@@ -27,34 +27,34 @@
     <div class="box">
       <div class="top">
         <h2>热门品牌</h2>
-        <router-link :to="{name: '',query: {cs: 1}}">更多品牌 ></router-link>
+        <router-link :to="{name: 'xc'}">更多品牌 ></router-link>
       </div>
       <div class="items">
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 66}}">
         <div class="item">
           <img src="../assets/carType/奥迪.png" alt="" />
           <span>奥迪</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 69}}">
         <div class="item">
           <img src="../assets/carType/奔驰.png" alt="" />
           <span>奔驰</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 70}}">
         <div class="item">
           <img src="../assets/carType/宝马.png" alt="" />
           <span>宝马</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 71}}">
         <div class="item">
           <img src="../assets/carType/本田.png" alt="" />
           <span>本田</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 81}}">
         <div class="item">
           <img src="../assets/carType/长城.png" alt="" />
           <span>长城</span>
@@ -62,31 +62,31 @@
         </router-link>
       </div>
       <div class="items">
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 82}}">
         <div class="item">
           <img src="../assets/carType/大众.png" alt="" />
           <span>大众</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 85}}">
         <div class="item">
           <img src="../assets/carType/丰田.png" alt="" />
           <span>丰田</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 86}}">
         <div class="item">
           <img src="../assets/carType/福特.png" alt="" />
           <span>福特</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 116}}">
         <div class="item">
           <img src="../assets/carType/日产.png" alt="" />
           <span>日产</span>
         </div>
         </router-link>
-        <router-link :to="{name: '',query: {cs: 1}}">
+        <router-link :to="{name: 'xc',params: {cs: 127}}">
         <div class="item">
           <img src="../assets/carType/雪佛兰.png" alt="" />
           <span>雪佛兰</span>
