@@ -4,7 +4,7 @@
       <div class="search">
         <i class="el-icon-search"></i>
         <input type="text" v-model="text" placeholder="请输入你要搜索的内容"/>
-        <button id="btn" @click="search(text)">搜索</button>
+        <router-link :to="{name: 'search',query: {text: text}}"><button id="btn">搜索</button></router-link>
       </div>
 
       <div class="people">
@@ -69,9 +69,6 @@ export default {
         message: data,
         type: 'success'
       })
-    },
-    search (text) {
-      alert(text)
     }
   },
   created () {

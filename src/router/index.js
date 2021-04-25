@@ -22,6 +22,12 @@ const routes = [
     name: 'ph',
     component: () => import('../views/ph')
   },
+  // 搜索
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('../views/search')
+  },
   // 车友圈
   {
     path: '/cyq',
