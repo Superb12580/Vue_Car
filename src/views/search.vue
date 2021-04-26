@@ -151,7 +151,36 @@
         </div>
         <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="用户" name="fourth">定时任务补偿</el-tab-pane>
+      <el-tab-pane label="用户" name="fourth">
+        <div v-if="pageUser.total !== 0" style="margin: 50px auto">
+          <el-row>
+            <el-col style="margin-bottom: 50px" :span="4" v-for="(record, index) in pageUser.records" :key="index" :offset="2">
+              <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                <router-link :to="{name: 'ckyh',query: {userId: record.userId}}">
+                  <div style="margin-left: 35px">
+                    <img style="width: 80px;height: 80px" v-if="record.photo" :src="record.photo">
+                    <el-avatar v-else :size="80" style="color: indianred"> {{record.userName}} </el-avatar>
+                  </div>
+                  <h3 style="text-align: center">{{record.userName}}</h3>
+                </router-link>
+              </el-card>
+            </el-col>
+          </el-row>
+          <div style="margin-left: 50px">
+            <el-pagination
+              background="true"
+              @size-change="handleSizeChangeUser"
+              @current-change="handleCurrentChangeUser"
+              :current-page="pageUser.current"
+              :page-sizes="[6, 10, 12, 18]"
+              :page-size="pageUser.size"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pageUser.total">
+            </el-pagination>
+          </div>
+        </div>
+        <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
+      </el-tab-pane>
     </el-tabs>
     </div>
   </div>
@@ -386,7 +415,10 @@ export default {
   },
   created () {
     this.user = this.$store.getters.GET_USER
-    this.text = this.$route.query.text
+    const xr = this.$route.query.text
+    if (xr) {
+      this.text = xr
+    }
     this.search()
   }
 }
