@@ -85,6 +85,8 @@ import Header from '../../components/header'
 export default {
   name: 'wdsp',
   components: { Header },
+  // 页面刷新
+  inject: ['reload'],
   data () {
     return {
       dialogVideoFormVisible: false,
@@ -133,6 +135,7 @@ export default {
           this.$http.post('/video/saveVideo', that.video).then(function (rest) {
             that.dialogVideoFormVisible = false
             that.open()
+            that.reload()
           }, function (error) {
             console.log(error)
           })
