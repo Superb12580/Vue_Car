@@ -40,6 +40,18 @@ const routes = [
     name: 'header',
     component: () => import('../components/header')
   },
+  // 视频列表
+  {
+    path: '/list',
+    name: 'list',
+    component: () => import('../views/video/list')
+  },
+  // 视频详情
+  {
+    path: '/spxq',
+    name: 'spxq',
+    component: () => import('../views/video/spxq')
+  },
   // 文章详情
   {
     path: '/wzxq',
@@ -81,6 +93,12 @@ const routes = [
     path: '/dtxq',
     name: 'dtxq',
     component: () => import('../views/center/dtxq')
+  },
+  // 查看用户
+  {
+    path: '/cksp',
+    name: 'cksp',
+    component: () => import('../views/look/cksp')
   },
   // 查看用户
   {
@@ -141,6 +159,12 @@ const routes = [
         path: '/wdwz',
         name: 'wdwz',
         component: () => import('../views/center/wdwz')
+      },
+      // 我的视频
+      {
+        path: '/wdsp',
+        name: 'wdsp',
+        component: () => import('../views/center/wdsp')
       },
       // 我的动态
       {

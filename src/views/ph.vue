@@ -227,6 +227,24 @@
         </div>
       </div>
     </div>
+      <div class="box3" style="height: 430px;width: 400px;float: left">
+        <ul style="padding-left: 20px">
+          <h2 style="margin-bottom: 20px">视频排行榜</h2>
+          <li class="list" v-for="(item,index) in spPh">
+          <span class="left">
+            <span v-if="index === 0" class="num num1">{{index + 1}}</span>
+            <span v-else-if="index === 1" class="num num2">{{index + 1}}</span>
+            <span v-else-if="index === 2" class="num num3">{{index + 1}}</span>
+            <span v-else class="num">{{index + 1}}</span>
+            <router-link v-if="index === 0" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e62021" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else style="font-size: 16px;height: 20px" :to="{name: 'spxq',query: {id: item.id}}"><span class="content">{{item.videoTitle}}</span></router-link>
+          </span>
+            <span class="bofang"> {{item.count}}次点击 </span>
+          </li>
+        </ul>
+      </div>
       <!--      友情链接-->
       <div class="footer">
         <div class="footer1">
@@ -290,7 +308,8 @@ export default {
       xlph: [],
       pfph: [],
       djlph: [],
-      scsph: []
+      scsph: [],
+      spPh: []
     }
   },
   created () {
@@ -325,12 +344,84 @@ export default {
     }, function (error) {
       console.log(error)
     })
+    // 视频排行初始化
+    this.$http.get('/video/itemPh').then(function (rest) {
+      that.spPh = rest.data.data
+    }, function (error) {
+      console.log(error)
+    })
   }
 }
 </script>
 
 <style scoped>
+  /*  排行榜*/
+  ul,
+  li {
+    list-style: none;
+  }
+  .box3 {
+    font-size: 0;
+    margin-left: 40px;
+  }
+  .box3 ul {
+    width: 380px;
+    font-size: 14px;
+  }
+  .box3 ul li {
+    display: flex;
+    width: 100%;
+    margin-bottom: 17px;
+  }
+  .box3 .left {
+    display: flex;
+    cursor: pointer;
+  }
+  .box3 .list .left:hover .content{
+    color: #e65800;
+  }
 
+  .box3 .left .num {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 18px;
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    text-align: center;
+    margin-right: 8px;
+    color: #979aa8;
+  }
+  .box3 .left .num1 {
+    background-color: #e62021;
+    color: #ffffff;
+  }
+  .box3 .left .num2 {
+    background-color: #e65800;
+    color: #ffffff;
+  }
+  .box3 .left .num3 {
+    background-color: #f5b330;
+    color: #ffffff;
+  }
+  .box3 .left .content {
+    display: block;
+    width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #1f2129;
+  }
+  .box3 ul li .bofang {
+    margin-left: auto;
+    font-size: 12px;
+    color: #979aa8;
+    padding-left: 6px;
+  }
+  /*  排行榜*/
   .ytxw {
     width: 750px;
     height: 150px;
@@ -373,7 +464,7 @@ export default {
   }
   .xr2{
     float: left;
-    width: 400px;
+    width: 450px;
   }
   /*友情链接*/
   .footer {

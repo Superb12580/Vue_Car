@@ -17,6 +17,10 @@
             <i class="el-icon-news"></i>
             <span slot="title">我的文章</span>
           </el-menu-item>
+          <el-menu-item index="/wdsp" v-if="this.$store.getters.GET_USER.sfrz === 1">
+            <i class="el-icon-news"></i>
+            <span slot="title">我的视频</span>
+          </el-menu-item>
           <el-menu-item index="/wddt">
             <i class="el-icon-news"></i>
             <span slot="title">我的动态</span>

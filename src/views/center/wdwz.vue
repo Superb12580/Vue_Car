@@ -50,7 +50,7 @@
 <script>
 import Header from '../../components/header'
 export default {
-  name: 'wzlb',
+  name: 'wdwz',
   components: { Header },
   data () {
     return {

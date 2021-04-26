@@ -2,10 +2,10 @@
   <div>
     <Header></Header>
     <div style="margin-top: 10px;">
-      <router-link :to="{ path: '/fbwz'}"><el-button v-if="user.sfrz === 1" type="text" style="float: right;margin-right: 450px">发布文章</el-button></router-link>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>新闻列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/ckyh', query: { userId: this.userId }}"><span style="color: #409EFF"> {{this.userName}} </span>的个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item>Ta 的文章列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div style="margin: 15px auto">
@@ -47,24 +47,6 @@
             <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.title}}</span></router-link>
             <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.title}}</span></router-link>
             <router-link v-else style="font-size: 16px;height: 20px" :to="{name: 'wzxq',query: {id: item.id}}"><span class="content">{{item.title}}</span></router-link>
-          </span>
-            <span class="bofang"> {{item.count}}次点击 </span>
-          </li>
-        </ul>
-      </div>
-      <div class="box3" style="height: 430px;width: 400px;float: left">
-        <ul style="padding-left: 20px">
-          <h2 style="margin-bottom: 20px">视频排行榜</h2>
-          <li class="list" v-for="(item,index) in spPh">
-          <span class="left">
-            <span v-if="index === 0" class="num num1">{{index + 1}}</span>
-            <span v-else-if="index === 1" class="num num2">{{index + 1}}</span>
-            <span v-else-if="index === 2" class="num num3">{{index + 1}}</span>
-            <span v-else class="num">{{index + 1}}</span>
-            <router-link v-if="index === 0" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e62021" class="content">{{item.videoTitle}}</span></router-link>
-            <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.videoTitle}}</span></router-link>
-            <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.videoTitle}}</span></router-link>
-            <router-link v-else style="font-size: 16px;height: 20px" :to="{name: 'spxq',query: {id: item.id}}"><span class="content">{{item.videoTitle}}</span></router-link>
           </span>
             <span class="bofang"> {{item.count}}次点击 </span>
           </li>
@@ -155,7 +137,7 @@
 <script>
 import Header from '../../components/header'
 export default {
-  name: 'wzlb',
+  name: 'ckwz',
   components: { Header },
   data () {
     return {
@@ -169,17 +151,16 @@ export default {
       rmpp: [],
       // 文章排行
       wzPh: [],
-      // 视频
-      spPh: [],
-      user: {
-        sfrz: 0
-      }
+      // 用户Id
+      userId: '',
+      // 用户名称
+      userName: '张三'
     }
   },
   methods: {
     handleSizeChange (val) {
       const that = this
-      this.$http.get('/news/list?size=' + val).then(function (rest) {
+      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -187,7 +168,7 @@ export default {
     },
     handleCurrentChange (val) {
       const that = this
-      this.$http.get('/news/list?size=' + that.page.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -195,19 +176,16 @@ export default {
     }
   },
   created () {
-    // 是否认证
-    const user = this.$store.getters.GET_USER
-    if (user) {
-      this.user.sfrz = user.sfrz
-    }
     const that = this
-    // 所有news
-    this.$http.get('/news/list').then(function (rest) {
+    const thatId = this.$route.query.userId
+    this.userId = thatId
+    this.userName = this.$route.query.userName
+    // 个人
+    this.$http.get('/news/item?userId=' + thatId).then(function (rest) {
       that.page = rest.data.data
     }, function (error) {
       console.log(error)
     })
-    // 热门品牌初始化
     this.$http.get('/style/itemDjl').then(function (rest) {
       that.rmpp = rest.data.data
     }, function (error) {
@@ -216,12 +194,6 @@ export default {
     // 文章排行初始化
     this.$http.get('/news/itemPh').then(function (rest) {
       that.wzPh = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    // 视频排行初始化
-    this.$http.get('/video/itemPh').then(function (rest) {
-      that.spPh = rest.data.data
     }, function (error) {
       console.log(error)
     })
