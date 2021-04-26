@@ -30,6 +30,7 @@
         <router-link to="/">首 页</router-link>
         <router-link to="/xc">选 车</router-link>
         <router-link to="/ph">排 行</router-link>
+        <router-link to="/list">视 频</router-link>
         <router-link to="/cyq">车友圈</router-link>
       </div>
     </div>
@@ -86,7 +87,7 @@ export default {
   }
 
   .home .center a {
-    margin-left: 150px;
+    margin-left: 110px;
     font-weight: bold;
     text-decoration: none;
     color: #000;
@@ -152,7 +153,7 @@ export default {
     height: 40px;
     line-height: 40px;
     margin-top: 20px;
-    margin-left: 260px;
+    margin-left: 290px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     z-index: 0;

@@ -118,7 +118,7 @@
       <div class="ytxw" v-for="video in page.records">
         <!--新闻右侧-->
         <div class="xwyc">
-          <router-link :to="{name: '',query: {id: video.id}}"><h3 style="height: 60px">{{video.videoTitle}}</h3></router-link>
+          <router-link :to="{name: 'spxq',query: {id: video.id}}"><h3 style="height: 60px">{{video.videoTitle}}</h3></router-link>
           <router-link :to="{name: 'ckyh',query: {userId: video.user.userId}}"><h4 style="float: left">{{video.user.userName}}</h4></router-link>
           <div style="margin-top: 25px;float: left">
           <i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /></i>
@@ -128,7 +128,7 @@
         </div>
         <!--新闻图-->
         <div class="xwt">
-          <router-link :to="{name: '',query: {id: video.id}}">
+          <router-link :to="{name: 'spxq',query: {id: video.id}}">
             <video style="width: 100%;height: 100%" :src="video.videoUrl"></video>
           </router-link>
         </div>
@@ -205,7 +205,6 @@ export default {
       options: [],
       rulesVideo: {
         videoTitle: { required: true, message: '请输入标题', trigger: 'blur' },
-        styleId: { required: true, message: '请关联车型', trigger: 'blur' },
         videoId: { required: true, message: '待上传', trigger: 'blur' }
       },
       page: {

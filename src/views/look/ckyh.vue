@@ -16,9 +16,12 @@
           <el-button v-else icon="el-icon-check" type="success" round size="mini" @click="attention">已关注</el-button>
         </div>
       </div>
-      <div style="margin-left: 160px">
+      <div style="margin-left: 120px">
         <el-badge v-if="user.sfrz === 1" :value="user.newsCount" :max="10" class="item">
           <el-button size="small" @click="toWz(user.userId, user.userName)">Ta的文章</el-button>
+        </el-badge>
+        <el-badge v-if="user.sfrz === 1" :value="user.videoCount" :max="10" class="item" type="warning">
+          <el-button size="small" @click="toSp(user.userId, user.userName)">Ta的视频</el-button>
         </el-badge>
       <el-badge :value="user.attentionCount" :max="10" class="item">
         <el-button size="small" @click="toAttention(user.userId, user.userName)">Ta的关注</el-button>
@@ -120,6 +123,9 @@ export default {
   methods: {
     toWz (userId, userName) {
       this.$router.push({ path: '/ckwz', query: { userId: userId, userName: userName } })
+    },
+    toSp (userId, userName) {
+      this.$router.push({ path: '/cksp', query: { userId: userId, userName: userName } })
     },
     toAttention (userId, userName) {
       this.$router.push({ path: '/ckgz', query: { userId: userId, userName: userName } })

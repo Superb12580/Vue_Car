@@ -5,7 +5,7 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: '/ckyh', query: { userId: this.userId }}"><span style="color: #409EFF"> {{this.userName}} </span>的个人中心</el-breadcrumb-item>
-        <el-breadcrumb-item>Ta 的文章列表</el-breadcrumb-item>
+        <el-breadcrumb-item>Ta 的视频列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div style="margin: 15px auto">
@@ -36,17 +36,17 @@
 <!--      排行-->
       <div class="box3" style="height: 430px;width: 400px;float: left">
         <ul style="padding-left: 20px">
-          <h2 style="margin-bottom: 20px">文章排行榜</h2>
-          <li class="list" v-for="(item,index) in wzPh">
+          <h2 style="margin-bottom: 20px">视频排行榜</h2>
+          <li class="list" v-for="(item,index) in spPh">
           <span class="left">
             <span v-if="index === 0" class="num num1">{{index + 1}}</span>
             <span v-else-if="index === 1" class="num num2">{{index + 1}}</span>
             <span v-else-if="index === 2" class="num num3">{{index + 1}}</span>
             <span v-else class="num">{{index + 1}}</span>
-            <router-link v-if="index === 0" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #e62021" class="content">{{item.title}}</span></router-link>
-            <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.title}}</span></router-link>
-            <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'wzxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.title}}</span></router-link>
-            <router-link v-else style="font-size: 16px;height: 20px" :to="{name: 'wzxq',query: {id: item.id}}"><span class="content">{{item.title}}</span></router-link>
+            <router-link v-if="index === 0" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e62021" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else-if="index === 1" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #e65800" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else-if="index === 2" style="font-size: 16px" :to="{name: 'spxq',query: {id: item.id}}"><span style="color: #f5b330" class="content">{{item.videoTitle}}</span></router-link>
+            <router-link v-else style="font-size: 16px;height: 20px" :to="{name: 'spxq',query: {id: item.id}}"><span class="content">{{item.videoTitle}}</span></router-link>
           </span>
             <span class="bofang"> {{item.count}}次点击 </span>
           </li>
@@ -97,22 +97,21 @@
     <div style="width: 1px;height: 1360px;background-color: #ff6700;float: right;margin-right: 20px"></div>
     <div v-if="page.total !== 0" class="left2">
       <!--一条新闻-->
-      <div class="ytxw" v-for="news in page.records">
+      <div class="ytxw" v-for="video in page.records">
         <!--新闻右侧-->
         <div class="xwyc">
-          <router-link :to="{name: 'wzxq',query: {id: news.id}}"><h3 style="height: 60px">{{news.title}}</h3></router-link>
-          <router-link :to="{name: 'ckyh',query: {userId: news.user.userId}}"><h4 style="float: left">{{news.user.userName}}</h4></router-link>
+          <router-link :to="{name: 'spxq',query: {id: video.id}}"><h3 style="height: 60px">{{video.videoTitle}}</h3></router-link>
+          <router-link :to="{name: 'ckyh',query: {userId: video.user.userId}}"><h4 style="float: left">{{video.user.userName}}</h4></router-link>
           <div style="margin-top: 25px;float: left">
           <i class="vip"><img src="../../assets/icons/vip.png" alt="vip" /></i>
-          <span style="font-size: 14px;margin-left: 20px">{{news.createTime}}</span>
+          <span style="font-size: 14px;margin-left: 20px">{{video.createTime}}</span>
           </div>
-          <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{news.count}}</h5>
+          <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{video.count}}</h5>
         </div>
         <!--新闻图-->
         <div class="xwt">
-          <router-link :to="{name: 'wzxq',query: {id: news.id}}">
-            <img style="width: 100%;height: 100%" v-if="news.newsPhoto" :src="news.newsPhoto">
-            <img style="width: 100%;height: 100%" v-else src="../../assets/carWzzs/0.jpg">
+          <router-link :to="{name: 'spxq',query: {id: video.id}}">
+            <img style="width: 100%;height: 100%" :src="video.videoUrl">
           </router-link>
         </div>
       </div>
@@ -137,7 +136,7 @@
 <script>
 import Header from '../../components/header'
 export default {
-  name: 'ckwz',
+  name: 'cksp',
   components: { Header },
   data () {
     return {
@@ -150,7 +149,7 @@ export default {
       // 右侧热门品牌
       rmpp: [],
       // 文章排行
-      wzPh: [],
+      spPh: [],
       // 用户Id
       userId: '',
       // 用户名称
@@ -160,7 +159,7 @@ export default {
   methods: {
     handleSizeChange (val) {
       const that = this
-      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + val).then(function (rest) {
+      this.$http.get('/video/listByUserId?userId=' + that.$route.query.userId + '&size=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -168,7 +167,7 @@ export default {
     },
     handleCurrentChange (val) {
       const that = this
-      this.$http.get('/news/item?userId=' + that.$route.query.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
+      this.$http.get('/video/listByUserId?userId=' + that.$route.query.userId + '&size=' + that.page.size + '&current=' + val).then(function (rest) {
         that.page = rest.data.data
       }, function (error) {
         console.log(error)
@@ -177,11 +176,10 @@ export default {
   },
   created () {
     const that = this
-    const thatId = this.$route.query.userId
-    this.userId = thatId
+    this.userId = this.$route.query.userId
     this.userName = this.$route.query.userName
     // 个人
-    this.$http.get('/news/item?userId=' + thatId).then(function (rest) {
+    this.$http.get('/video/listByUserId?userId=' + this.userId).then(function (rest) {
       that.page = rest.data.data
     }, function (error) {
       console.log(error)
@@ -191,9 +189,9 @@ export default {
     }, function (error) {
       console.log(error)
     })
-    // 文章排行初始化
-    this.$http.get('/news/itemPh').then(function (rest) {
-      that.wzPh = rest.data.data
+    // 视频排行初始化
+    this.$http.get('/video/itemPh').then(function (rest) {
+      that.spPh = rest.data.data
     }, function (error) {
       console.log(error)
     })
