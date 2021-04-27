@@ -151,7 +151,43 @@
         </div>
         <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="用户" name="fourth">
+      <el-tab-pane label="视频" name="fourth">
+        <div v-if="pageVideo.total !== 0" class="left2">
+          <!--一条新闻-->
+          <div class="ytxw" v-for="video in pageVideo.records">
+            <!--新闻右侧-->
+            <div class="xwyc">
+              <router-link :to="{name: 'spxq',query: {id: video.id}}"><h3 style="height: 60px">{{video.videoTitle}}</h3></router-link>
+              <router-link :to="{name: 'ckyh',query: {userId: video.user.userId}}"><h4 style="float: left">{{video.user.userName}}</h4></router-link>
+              <div style="margin-top: 25px;float: left">
+                <i class="vip"><img src="../assets/icons/vip.png" alt="vip" /></i>
+                <span style="font-size: 14px;margin-left: 20px">{{video.createTime}}</span>
+              </div>
+              <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px" class="el-icon-s-help"></span>在看：{{video.count}}</h5>
+            </div>
+            <!--新闻图-->
+            <div class="xwt">
+              <router-link :to="{name: 'spxq',query: {id: video.id}}">
+                <video style="width: 100%;height: 100%" :src="video.videoUrl"></video>
+              </router-link>
+            </div>
+          </div>
+          <div style="float: left;margin: 30px 0 30px 50px">
+            <el-pagination
+              background="true"
+              @size-change="handleSizeChangeVideo"
+              @current-change="handleCurrentChangeVideo"
+              :current-page="pageVideo.current"
+              :page-sizes="[5, 8, 10, 15]"
+              :page-size="pageVideo.size"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pageVideo.total">
+            </el-pagination>
+          </div>
+        </div>
+        <div style="padding: 200px 350px" v-else><h2 style="color: red">暂无数据</h2></div>
+      </el-tab-pane>
+      <el-tab-pane label="用户" name="fifth">
         <div v-if="pageUser.total !== 0" style="margin: 50px auto">
           <el-row>
             <el-col style="margin-bottom: 50px" :span="4" v-for="(record, index) in pageUser.records" :key="index" :offset="2">
@@ -214,6 +250,12 @@ export default {
         total: 20,
         size: 5
       },
+      pageVideo: {
+        records: [],
+        current: 1,
+        total: 20,
+        size: 5
+      },
       pageEssay: {
         records: [],
         current: 1,
@@ -235,6 +277,22 @@ export default {
       const that = this
       this.$http.get('/news/search?text=' + this.text + '&size=' + that.pageNews.size + '&current=' + val).then(function (rest) {
         that.pageNews = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    handleSizeChangeVideo (val) {
+      const that = this
+      this.$http.get('/video/search?text=' + this.text + '&size=' + val).then(function (rest) {
+        that.pageVideo = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    handleCurrentChangeVideo (val) {
+      const that = this
+      this.$http.get('/video/search?text=' + this.text + '&size=' + that.pageVideo.size + '&current=' + val).then(function (rest) {
+        that.pageVideo = rest.data.data
       }, function (error) {
         console.log(error)
       })
@@ -393,6 +451,11 @@ export default {
       const that = this
       this.$http.get('/style/search?text=' + this.text).then(function (rest) {
         that.pageStyle = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.$http.get('/video/search?text=' + this.text).then(function (rest) {
+        that.pageVideo = rest.data.data
       }, function (error) {
         console.log(error)
       })
