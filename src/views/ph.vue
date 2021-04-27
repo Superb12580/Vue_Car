@@ -365,7 +365,7 @@ export default {
     margin-left: 40px;
   }
   .box3 ul {
-    width: 380px;
+    width: 400px;
     font-size: 14px;
   }
   .box3 ul li {

@@ -8,9 +8,9 @@
         <el-breadcrumb-item>动态详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="checkbox">
+    <div class="checkbox" v-if="essay.deleted == 0">
     <div class="detail">
-      <div style="height: 100px">
+      <div style="height: 150px">
         <h1 style="color: dodgerblue;">{{essay.essayTitle}}</h1>
         <div style="float: right;margin-right: 30px">
           <el-button type="danger" circle icon="el-icon-delete" v-show="flag" @click="remove"></el-button>
@@ -20,7 +20,7 @@
         </h4>
       </div>
       <el-divider></el-divider>
-      <div class="markdown-body" v-html="essay.essayText"></div>
+      <div style="overflow:auto" class="markdown-body" v-html="essay.essayText"></div>
     </div>
     <div id="homepage">
       <div class="box">
@@ -104,6 +104,7 @@
       </div>
     </div>
     </div>
+    <div style="margin: 200px 500px" v-else><h2 style="color: red">原文已删除</h2></div>
   </div>
 </template>
 
