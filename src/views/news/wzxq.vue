@@ -63,7 +63,7 @@
       <div style="border: 1px solid #ccc;width: 370px;height: 410px;margin-left: 14px;padding-top: 20px">
         <span style="font-size: 18px;color: #333;margin-left: 10px;">相关车型</span>
       <div class="style">
-        <router-link :to="{name: '',query: {styleId: news.style.styleId}}">
+        <router-link :to="{name: 'cxq',query: {styleId: news.style.styleId}}">
           <el-card :body-style="{ padding: '10px' }" shadow="hover">
             <img style="width: 280px" :src="news.style.stylePhoto" class="image">
             <div style="padding: 10px;">

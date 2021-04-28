@@ -6,7 +6,7 @@
         <el-tab-pane label="评分排行" name="first">
           <div class="ytxw" v-for="(item,index) in pfph">
             <div class="xwyc" v-if="index === 0" style="background-color: #F96868">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">评分：{{item.pf}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -14,7 +14,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 1" style="background-color: #926DDE">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">评分：{{item.pf}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -22,7 +22,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 2" style="background-color: #15C377">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">评分：{{item.pf}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -30,7 +30,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else>
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">评分：{{item.pf}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -38,9 +38,8 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwt">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}">
-                <img style="width: 100%;height: 100%" v-if="item.style_photo" :src="item.style_photo">
-                <img style="width: 100%;height: 100%" v-else src="../assets/carWzzs/0.jpg">
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}">
+                <img style="width: 100%;height: 100%" :src="item.style_photo">
               </router-link>
             </div>
             <div class="xwzj">
@@ -54,7 +53,7 @@
         <el-tab-pane label="销量排行" name="second">
           <div class="ytxw" v-for="(item,index) in xlph">
             <div class="xwyc" v-if="index === 0" style="background-color: #F96868">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">销量：{{item.xl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -62,7 +61,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 1" style="background-color: #926DDE">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">销量：{{item.xl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -70,7 +69,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 2" style="background-color: #15C377">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">销量：{{item.xl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -78,7 +77,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else>
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">销量：{{item.xl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -86,9 +85,8 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwt">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}">
-                <img style="width: 100%;height: 100%" v-if="item.stylePhoto" :src="item.stylePhoto">
-                <img style="width: 100%;height: 100%" v-else src="../assets/carWzzs/0.jpg">
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}">
+                <img style="width: 100%;height: 100%" :src="item.stylePhoto">
               </router-link>
             </div>
             <div class="xwzj">
@@ -102,7 +100,7 @@
         <el-tab-pane label="点击量" name="third">
           <div class="ytxw" v-for="(item,index) in djlph">
             <div class="xwyc" v-if="index === 0" style="background-color: #F96868">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">点击量：{{item.djl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -110,7 +108,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 1" style="background-color: #926DDE">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">点击量：{{item.djl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -118,7 +116,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 2" style="background-color: #15C377">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">点击量：{{item.djl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -126,7 +124,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else>
-              <router-link :to="{name: '',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}"><h3 style="height: 60px;margin-left: 20px">{{item.styleName}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">点击量：{{item.djl}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -135,8 +133,7 @@
             </div>
             <div class="xwt">
               <router-link :to="{name: '',query: {styleId: item.styleId}}">
-                <img style="width: 100%;height: 100%" v-if="item.stylePhoto" :src="item.stylePhoto">
-                <img style="width: 100%;height: 100%" v-else src="../assets/carWzzs/0.jpg">
+                <img style="width: 100%;height: 100%" :src="item.stylePhoto">
               </router-link>
             </div>
             <div class="xwzj">
@@ -150,7 +147,7 @@
         <el-tab-pane label="收藏数" name="fourth">
           <div class="ytxw" v-for="(item,index) in scsph">
             <div class="xwyc" v-if="index === 0" style="background-color: #F96868">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">收藏数：{{item.count}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -158,7 +155,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 1" style="background-color: #926DDE">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">收藏数：{{item.count}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -166,7 +163,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else-if="index === 2" style="background-color: #15C377">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">收藏数：{{item.count}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -174,7 +171,7 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwyc" v-else>
-              <router-link :to="{name: '',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}"><h3 style="height: 60px;margin-left: 20px">{{item.style_name}}</h3></router-link>
               <div style="margin-top: 10px;float: left">
                 <h4 style="font-size: 14px;margin-left: 20px">收藏数：{{item.count}}</h4>
                 <h4 style="font-size: 14px;margin-left: 20px">价格区间：{{item.jgqj}}</h4>
@@ -182,9 +179,8 @@
               <h5 style="font-size: 14px;float: right"><span style="font-size: 25px;margin-right: 6px"></span>上市时间：{{item.sssj}}</h5>
             </div>
             <div class="xwt">
-              <router-link :to="{name: '',query: {styleId: item.style_id}}">
-                <img style="width: 100%;height: 100%" v-if="item.style_photo" :src="item.style_photo">
-                <img style="width: 100%;height: 100%" v-else src="../assets/carWzzs/0.jpg">
+              <router-link :to="{name: 'cxq',query: {styleId: item.style_id}}">
+                <img style="width: 100%;height: 100%" :src="item.style_photo">
               </router-link>
             </div>
             <div class="xwzj">

@@ -17,7 +17,7 @@
     <div style="margin: 25px auto">
       <el-carousel :interval="4000" type="card" height="300px" style="width: 1200px;margin: 0 auto">
         <el-carousel-item v-for="(item,index) in imgLbt" :key="index">
-          <img :src="item.imgLbt" style="height: 300px">
+          <router-link :to="{name: 'cxq', query: {styleId: item.styleId}}"><img :src="item.imgLbt" style="height: 300px"></router-link>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -99,7 +99,7 @@
     <div style="height: 300px">
 <!--      折叠图开始-->
       <div style="float: left">
-        <router-link :to="{name: '',query: {styleId: imgZb.style_id}}">
+        <router-link :to="{name: 'cxq',query: {styleId: imgZb.style_id}}">
         <el-image :src="imgZb.style_photo" style="width: 400px;height: 250px">
           <div slot="placeholder" class="image-slot">
             加载中<span class="dot">...</span>
@@ -195,7 +195,7 @@
     <div>
       <el-row>
         <el-col :span="6" v-for="(item, index) in imgDb" :key="index" :offset="2">
-          <router-link :to="{name: '',query: {styleId: item.styleId}}">
+          <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}">
           <el-card :body-style="{ padding: '10px' }" shadow="hover" style="margin: 10px">
             <img style="height: 230px" :src="item.stylePhoto" class="image">
             <div style="padding: 14px;">

@@ -3,7 +3,7 @@
     <div v-if="page.total !== 0">
     <el-row>
       <el-col :span="5" v-for="(item, index) in page.records" :key="index" :offset="1" style="margin-bottom: 20px">
-        <router-link :to="{name: '',query: {styleId: item.style.styleId}}">
+        <router-link :to="{name: 'cxq',query: {styleId: item.style.styleId}}">
           <el-card :body-style="{ padding: '10px' }" shadow="hover">
             <img style="height: 180px" :src="item.style.stylePhoto" class="image">
             <div>

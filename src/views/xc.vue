@@ -47,7 +47,7 @@
         <div>
           <el-row>
             <el-col :span="8" v-for="(item, index) in style" :key="index" :offset="0">
-              <router-link :to="{name: '',query: {styleId: item.styleId}}">
+              <router-link :to="{name: 'cxq',query: {styleId: item.styleId}}">
                 <el-card :body-style="{ padding: '10px' }" shadow="hover" style="margin: 10px">
                   <img style="height: 230px" :src="item.stylePhoto" class="image">
                   <div style="padding: 14px;">

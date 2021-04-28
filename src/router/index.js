@@ -34,6 +34,12 @@ const routes = [
     name: 'cyq',
     component: () => import('../views/cyq')
   },
+  // 车详情
+  {
+    path: '/cxq',
+    name: 'cxq',
+    component: () => import('../views/car/cxq')
+  },
   // 头部
   {
     path: '/header',
