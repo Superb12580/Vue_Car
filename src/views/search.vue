@@ -38,7 +38,7 @@
     <div style="width: 900px;margin: 0 auto">
       <h2>搜索结果...</h2>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="车型" name="first">
+      <el-tab-pane :label="label_style" name="first">
         <div v-if="pageStyle.total !== 0">
           <el-row>
             <el-col :span="8" v-for="(item, index) in pageStyle.records" :key="index">
@@ -71,7 +71,7 @@
         </div>
         <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="新闻" name="second">
+      <el-tab-pane :label="label_news" name="second">
         <div v-if="pageNews.total !== 0" class="left2">
           <!--一条新闻-->
           <div class="ytxw" v-for="news in pageNews.records">
@@ -108,7 +108,7 @@
         </div>
         <div style="padding: 200px 350px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="动态" name="third">
+      <el-tab-pane :label="label_essay" name="third">
         <div v-if="pageEssay.total !== 0">
           <div>
             <el-timeline>
@@ -151,7 +151,7 @@
         </div>
         <div style="margin: 200px 500px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="视频" name="fourth">
+      <el-tab-pane :label="label_video" name="fourth">
         <div v-if="pageVideo.total !== 0" class="left2">
           <!--一条新闻-->
           <div class="ytxw" v-for="video in pageVideo.records">
@@ -187,7 +187,7 @@
         </div>
         <div style="padding: 200px 350px" v-else><h2 style="color: red">暂无数据</h2></div>
       </el-tab-pane>
-      <el-tab-pane label="用户" name="fifth">
+      <el-tab-pane :label="label_user" name="fifth">
         <div v-if="pageUser.total !== 0" style="margin: 50px auto">
           <el-row>
             <el-col style="margin-bottom: 50px" :span="4" v-for="(record, index) in pageUser.records" :key="index" :offset="2">
@@ -238,30 +238,35 @@ export default {
         total: 20,
         size: 5
       },
+      label_style: '车型',
       pageNews: {
         records: [],
         current: 1,
         total: 20,
         size: 5
       },
+      label_news: '新闻',
       pageUser: {
         records: [],
         current: 1,
         total: 20,
         size: 5
       },
+      label_user: '用户',
       pageVideo: {
         records: [],
         current: 1,
         total: 20,
         size: 5
       },
+      label_video: '视频',
       pageEssay: {
         records: [],
         current: 1,
         total: 20,
         size: 5
-      }
+      },
+      label_essay: '动态'
     }
   },
   methods: {
@@ -451,26 +456,31 @@ export default {
       const that = this
       this.$http.get('/style/search?text=' + this.text).then(function (rest) {
         that.pageStyle = rest.data.data
+        that.label_style = '车型（' + rest.data.data.total + '）'
       }, function (error) {
         console.log(error)
       })
       this.$http.get('/video/search?text=' + this.text).then(function (rest) {
         that.pageVideo = rest.data.data
+        that.label_video = '视频（' + rest.data.data.total + '）'
       }, function (error) {
         console.log(error)
       })
       this.$http.get('/news/search?text=' + this.text).then(function (rest) {
         that.pageNews = rest.data.data
+        that.label_news = '新闻（' + rest.data.data.total + '）'
       }, function (error) {
         console.log(error)
       })
       this.$http.get('/essay/search?text=' + this.text).then(function (rest) {
         that.pageEssay = rest.data.data
+        that.label_essay = '动态（' + rest.data.data.total + '）'
       }, function (error) {
         console.log(error)
       })
       this.$http.get('/user/search?text=' + this.text).then(function (rest) {
         that.pageUser = rest.data.data
+        that.label_user = '用户（' + rest.data.data.total + '）'
       }, function (error) {
         console.log(error)
       })
