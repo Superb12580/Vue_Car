@@ -117,7 +117,9 @@ export default {
   name: 'dtxq',
   data () {
     return {
-      essay: {},
+      essay: {
+        deleted: 0
+      },
       // 判断是不是本人操作
       flag: false,
       // 是否是本人评论 登录人信息
