@@ -208,7 +208,7 @@
               @size-change="handleSizeChangeUser"
               @current-change="handleCurrentChangeUser"
               :current-page="pageUser.current"
-              :page-sizes="[6, 10, 12, 18]"
+              :page-sizes="[6, 8, 12, 18]"
               :page-size="pageUser.size"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageUser.total">

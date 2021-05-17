@@ -69,6 +69,10 @@
           </el-rate>
           <br>
           点击量：<span style="color: red">{{style.djl}}</span><br>
+          <div style="margin-top: 30px">
+            <el-button v-if="two" @click="sc()">已收藏该车型</el-button>
+            <el-button v-else @click="sc()" type="primary">点击收藏该车型</el-button>
+          </div>
         </div>
         <div style="float: left;width: 250px;height: 300px;padding-top: 135px">
           <div v-if="one">
@@ -288,7 +292,10 @@ export default {
       styleId: '',
       // 高亮显示
       flag: {},
-      one: {}
+      // 登录评分
+      one: {},
+      // 登录收藏
+      two: {}
     }
   },
   methods: {
@@ -307,6 +314,23 @@ export default {
         console.log(error)
       })
     },
+    sc () {
+      const user = this.$store.getters.GET_USER
+      // 判断是否已登录
+      if (!user) {
+        this.msg('您还没登录...')
+        this.$router.push('/login')
+        return false
+      }
+      const that = this
+      this.$http.post('/collection/addDelete', { userId: user.userId, styleId: this.styleId }).then(function (rest) {
+        that.reload()
+        that.msg(rest.data.msg)
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    // 高亮显示
     glxs () {
       // car
       const that = this
@@ -404,9 +428,15 @@ export default {
     // 判断是否已登录
     // 默认未登录
     that.one = null
+    that.two = null
     if (user) {
       this.$http.get('/reputation/item?styleId=' + this.styleId + '&userId=' + user.userId).then(function (rest) {
         that.one = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.$http.get('/collection/sfsc?styleId=' + this.styleId + '&userId=' + user.userId).then(function (rest) {
+        that.two = rest.data.data
       }, function (error) {
         console.log(error)
       })
