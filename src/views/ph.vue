@@ -210,13 +210,14 @@
             </div>
             <div class="pic">
               <router-link :to="{name: 'wzxq',query: {id: item.id}}"><a href="#" class="placeholderimg">
-                <img
+                <img v-if="item.newsPhoto"
                   width="80"
                   height="60"
                   :src="item.newsPhoto"
                   alt=""
                   style="display: inline-block"
                 />
+                <img v-else style="width: 100%;height: 100%" v-else src="../assets/carWzzs/0.jpg">
               </a></router-link>
             </div>
           </div>
