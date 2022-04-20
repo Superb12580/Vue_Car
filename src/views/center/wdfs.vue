@@ -2,7 +2,7 @@
   <div>
     <div v-if="page.total !== 0">
       <el-row>
-        <el-col style="margin-bottom: 50px" :span="2" v-for="(record, index) in page.records" :key="record" :offset="2">
+        <el-col style="margin-bottom: 50px;height: 190px;" :span="2" v-for="(record, index) in page.records" :key="record" :offset="2">
           <el-card :body-style="{ padding: '0px' }" shadow="hover">
             <router-link :to="{name: 'ckyh',query: {userId: record.user.userId}}">
               <div style="margin-left: 15px">
