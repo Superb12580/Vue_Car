@@ -25,6 +25,20 @@
 3.  提交代码
 4.  新建 Pull Request
 
+#### 效果图
+![输入图片说明](preview/%E9%A6%96%E9%A1%B5.png)
+![输入图片说明](preview/%E9%80%89%E8%BD%A6.png)
+![输入图片说明](preview/%E8%BD%A6%E6%8E%92%E8%A1%8C.png)
+![输入图片说明](preview/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE.png)
+![输入图片说明](preview/%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85.png)
+![输入图片说明](preview/%E6%96%87%E7%AB%A0%E5%8F%91%E5%B8%83.png)
+![输入图片说明](preview/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.png)
+![输入图片说明](preview/%E5%90%8E%E5%8F%B0%E9%A6%96%E9%A1%B5%E7%BB%9F%E8%AE%A1.png)
+![输入图片说明](preview/%E5%90%8E%E5%8F%B0%E6%B1%BD%E8%BD%A6%E7%AE%A1%E7%90%86.png)
+![输入图片说明](preview/%E5%8A%A8%E6%80%81%E5%8F%91%E5%B8%83.png)
+![输入图片说明](preview/%E5%8A%A8%E6%80%81%E5%88%97%E8%A1%A8.png)
+
+
 
 #### 特技
 
